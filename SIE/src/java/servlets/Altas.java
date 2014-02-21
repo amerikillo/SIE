@@ -79,7 +79,7 @@ public class Altas extends HttpServlet {
                      }catch (Exception e) {resto=0;}
                     int cantidad= (cajas*piezas)+resto;
                     con.conectar();
-                    con.insertar("insert into datos_inv_cod values ('"+request.getParameter("cb")+"', '"+request.getParameter("clave1")+"', '"+request.getParameter("Lote")+"', '"+request.getParameter("descripci")+"', '"+request.getParameter("Caducidad")+"' ,'NUEVO', '"+cantidad+"', 'ALMACEN EDO DURANGO', '"+sesion.getAttribute("nombre")+"', CURDATE(), 'BODEGA EDO DURANGO', '0', '"+cajas+"', '"+piezas+"', '"+resto+"', '"+request.getParameter("Marca")+"', '"+request.getParameter("pres")+"', '"+request.getParameter("origen")+"', '"+request.getParameter("coincide")+"', '"+request.getParameter("folio")+"', '"+request.getParameter("folio_remi")+"', '"+request.getParameter("orden")+"') ");
+                    con.insertar("insert into datos_inv_cod values ('"+request.getParameter("cb")+"', '"+request.getParameter("clave1")+"', '"+request.getParameter("Lote")+"', '"+request.getParameter("descripci")+"', '"+request.getParameter("Caducidad")+"' ,'NUEVO', '"+cantidad+"', '"+request.getParameter("provee")+"', '"+sesion.getAttribute("nombre")+"', CURDATE(), 'BODEGA EDO DURANGO', '0', '"+cajas+"', '"+piezas+"', '"+resto+"', '"+request.getParameter("Marca")+"', '"+request.getParameter("pres")+"', '"+request.getParameter("origen")+"', '"+request.getParameter("coincide")+"', '"+request.getParameter("folio")+"', '"+request.getParameter("folio_remi")+"', '"+request.getParameter("orden")+"') ");
                     con.cierraConexion();
                 } catch (Exception e) {
 

@@ -43,14 +43,14 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">Sistema de Ingreso de Entradas</a>
+                        <a class="navbar-brand" href="main_menu.jsp">Sistema de Ingreso de Entradas</a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
-                            <li><a href="catalogo.jsp" target="_blank">Catálogo de Proveedores</a></li>
-                            <li><a href="historial.jsp" target="_blank">Catalogo de Lotes</a></li>
-                            <li><a href="historial.jsp" target="_blank">Reimpresión de Docs</a></li>
+                            <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                            <li><a href="historial.jsp">Catalogo de Lotes</a></li>
+                            <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
@@ -60,7 +60,9 @@
                 </div>
             </div>
 
-            <div>
+            <div class="text-center">
+            <br /><br /><br />
+                <img src="imagenes/Logo GNK claro2.jpg" width="200" height="100" alt="Logo GNK claro2"/>
             </div>
         </div>
         <br><br><br>
