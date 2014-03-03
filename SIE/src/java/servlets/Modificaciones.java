@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import conn.ConectionDB;
+import conn.ConectionDB_SQLServer;
 import java.sql.SQLException;
 
 /**
@@ -23,6 +24,7 @@ import java.sql.SQLException;
 public class Modificaciones extends HttpServlet {
 
     ConectionDB con = new ConectionDB();
+    ConectionDB_SQLServer consql = new ConectionDB_SQLServer();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

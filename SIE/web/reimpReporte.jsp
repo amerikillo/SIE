@@ -18,7 +18,7 @@
     } else {
         response.sendRedirect("index.jsp");
     }
-    String folio_gnk = (String) session.getAttribute("folio");
+    String folio_gnk = request.getParameter("fol_gnkl");
     Connection conexion;
     Class.forName("com.mysql.jdbc.Driver").newInstance();
     conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/dgo", "root", "eve9397");

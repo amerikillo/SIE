@@ -14,13 +14,40 @@
 <%
 
     HttpSession sesion = request.getSession();
-    String usua = "";
+    String usua = "", id = "";
     if (sesion.getAttribute("nombre") != null) {
         usua = (String) sesion.getAttribute("nombre");
+        id = (String) sesion.getAttribute("id");
     } else {
         response.sendRedirect("index.jsp");
     }
     ConectionDB con = new ConectionDB();
+    String cla_pro = "", nom_pro = "", dir_pro = "", col_pro = "", pob_pro = "", cp_pro = "", rfc_pro = "", con_pro = "", cls_pro = "", tel_pro = "", fax_pro = "", mail_pro = "", obs_pro = "";
+    try {
+        con.conectar();
+        ResultSet rset = con.consulta("select * from provee_all where F_ClaPrv = '"+id+"' ");
+        while(rset.next())
+        {
+            cla_pro=rset.getString(1);
+            nom_pro=rset.getString(2);
+            dir_pro=rset.getString(3);
+            col_pro=rset.getString(4);
+            pob_pro=rset.getString(5);
+            cp_pro=rset.getString(6);
+            rfc_pro=rset.getString(7);
+            con_pro=rset.getString(8);
+            cls_pro=rset.getString(9);
+            tel_pro=rset.getString(10);
+            fax_pro=rset.getString(11);
+            mail_pro=rset.getString(12);
+            obs_pro=rset.getString(13);
+        }
+        con.cierraConexion();
+    } catch (Exception e) {
+    }
+    if (cla_pro==null){
+        
+    }
 %>
 <html>
     <head>
@@ -49,7 +76,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
                             <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <!--li><a href="historial.jsp">Catalogo de Lotes</a></li-->
+                            <li><a href="historial.jsp">Catalogo de Lotes</a></li>
                             <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -63,47 +90,48 @@
         <div class="container">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Catalogo de Proveedores</h3>
+                    <h3 class="panel-title">Actualizar Proveedor</h3>
                 </div>
                 <div class="panel-body ">
-                    <form class="form-horizontal" role="form" name="formulario1" id="formulario1" method="post" action="Proveedores">
+                    <form class="form-horizontal" role="form" name="formulario1" id="formulario1" method="get" action="Proveedores">
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="Clave" class="col-xs-1 control-label">Clave</label>
                                 <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="Clave" name="Clave" placeholder="Clave" onKeyPress="return tabular(event, this)" autofocus >
+                                <input type="text" class="hidden" id="id" name="id" placeholder="id" onKeyPress="return tabular(event, this)" autofocus value="<%=id%>" />
+                                    <input type="text" class="form-control" id="Clave" name="Clave" placeholder="Clave" onKeyPress="return tabular(event, this)" autofocus value="<%=cla_pro%>" />
                                 </div>
                                 <label for="Nombre" class="col-xs-1 control-label">Nombre</label>
                                 <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Nombre" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Nombre" onKeyPress="return tabular(event, this)" value="<%=nom_pro%>"  />
                                 </div>
                                 <label for="Direccion" class="col-xs-1 control-label">Dirección</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="Direccion" name="Direccion" placeholder="Direccion" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Direccion" name="Direccion" placeholder="Direccion" onKeyPress="return tabular(event, this)" value="<%=dir_pro%>"  />
                                 </div>
                                 <label for="Colonia" class="col-xs-1 control-label">Colonia</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="Colonia" name="Colonia" placeholder="Colonia" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Colonia" name="Colonia" placeholder="Colonia" onKeyPress="return tabular(event, this)" value="<%=col_pro%>"  />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="Poblacion" class="col-xs-1 control-label">Población</label>
+                                <label for="Poblacion" class="col-xs-1 control-label">Pob</label>
                                 <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="Poblacion" name="Poblacion" placeholder="Poblacion" onKeyPress="return tabular(event, this)"  >
+                                    <input type="text" class="form-control" id="Poblacion" name="Poblacion" placeholder="Poblacion" onKeyPress="return tabular(event, this)"  value="<%=pob_pro%>"  />
                                 </div>
                                 <label for="CP" class="col-xs-1 control-label">C.P.</label>
                                 <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="CP" name="CP" placeholder="CP" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="CP" name="CP" placeholder="CP" onKeyPress="return tabular(event, this)" value="<%=cp_pro%>"  />
                                 </div>
                                 <label for="RFC" class="col-xs-1 control-label">RFC</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="RFC" name="RFC" placeholder="RFC" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="RFC" name="RFC" placeholder="RFC" onKeyPress="return tabular(event, this)" value="<%=rfc_pro%>"  />
                                 </div>
                                 <label for="CON" class="col-xs-1 control-label">CON</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="CON" name="CON" placeholder="CON" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="CON" name="CON" placeholder="CON" onKeyPress="return tabular(event, this)" value="<%=con_pro%>"  />
                                 </div>
                             </div>
                         </div>
@@ -111,19 +139,19 @@
                             <div class="form-group">
                                 <label for="CLS" class="col-xs-1 control-label">CLS</label>
                                 <div class="col-xs-1">
-                                    <input type="CLS" class="form-control" id="CLS" name="CLS" placeholder="CLS" onKeyPress="return tabular(event, this)"  >
+                                    <input type="CLS" class="form-control" id="CLS" name="CLS" placeholder="CLS" onKeyPress="return tabular(event, this)"  value="<%=cls_pro%>"  />
                                 </div>
                                 <label for="Telefono" class="col-xs-1 control-label">Telefono</label>
                                 <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono" onKeyPress="return tabular(event, this)" value="<%=tel_pro%>"  />
                                 </div>
                                 <label for="FAX" class="col-xs-1 control-label">FAX</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="FAX" name="FAX" placeholder="FAX" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="FAX" name="FAX" placeholder="FAX" onKeyPress="return tabular(event, this)" value="<%=fax_pro%>"  />
                                 </div>
                                 <label for="Mail" class="col-xs-1 control-label">Mail</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="Mail" name="Mail" placeholder="Mail" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Mail" name="Mail" placeholder="Mail" onKeyPress="return tabular(event, this)"  value="<%=mail_pro%>"  />
                                 </div>
                             </div>
                         </div>
@@ -131,59 +159,16 @@
                             <div class="form-group">
                                 <label for="Observaciones" class="col-xs-2 control-label">Observaciones</label>
                                 <div class="col-xs-4">
-                                    <textarea class="form-control" id="Observaciones" name="Observaciones" placeholder="Observaciones" onKeyPress="return tabular(event, this)"></textarea>
+                                    <textarea class="form-control" id="Observaciones" name="Observaciones" placeholder="Observaciones" onKeyPress="return tabular(event, this)"><%=obs_pro%></textarea>
                                 </div>
-                                <div class="col-xs-1">
-                                    <button class="btn btn-block btn-primary" type="submit" name="accion" value="guardar" onclick="return valida_alta();"> Guardar</button> 
+                                <div class="col-xs-2">
+                                    <button class="btn btn-block btn-primary" type="submit" name="accion" value="actualizar" onclick="return valida_alta();">Actualizar</button> 
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="panel-footer">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>Clave</td>
-                            <td>Nombre</td>
-                            <td>Teléfono</td>
-                            <td>Opciones</td>
-                        </tr>
-                        <%
-                            try {
-                                con.conectar();
-                                ResultSet rset = con.consulta("select * from provee_all order by F_Claprv asc");
-                                while (rset.next()) {
-                        %>
-                        <tr>
-                            <td><small><%=rset.getString(1)%></small></td>
-                            <td><small><%=rset.getString(2)%></small></td>
-                            <td><small><%=rset.getString(10)%></small></td>
-                            <td>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <form class="form-horizontal" role="form" name="formulario2" id="formulario2" method="post" action="Proveedores" >
-                                            <div  class="col-xs-1 ">
-                                                <button class="btn btn-warning" name="accion" value="editar"><span class="glyphicon glyphicon-pencil" ></span></button>
-                                            </div>
-                                            <div class="col-xs-1">
-                                                <input name="id" id="id" type="text" class="hidden" value="<%=rset.getString(1)%>" />
-                                            </div>
-                                            <div  class="col-xs-1 ">
-                                                <button class="btn btn-danger" onclick="return confirm('¿Seguro de que desea eliminar?');" name="accion" value="eliminar"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <%
-                                }
-                                con.cierraConexion();
-                            } catch (Exception e) {
-                            }
-                        %>
-                    </table>
-                </div>
+
             </div>
         </div>
         <br><br><br>
@@ -205,13 +190,13 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
 <script>
-                                                    function valida_alta() {
-                                                        var Clave = document.formulario1.Clave.value;
-                                                        var Nombre = document.formulario1.Nombre.value;
-                                                        var Telefono = document.formulario1.Telefono.value;
-                                                        if (Clave === "" || Nombre === "" || Telefono === "") {
-                                                            alert("Tiene campos vacíos, verifique.");
-                                                            return false;
-                                                        }
-                                                    }
+                                        function valida_alta() {
+                                            var Clave = document.formulario1.Clave.value;
+                                            var Nombre = document.formulario1.Nombre.value;
+                                            var Telefono = document.formulario1.Telefono.value;
+                                            if (Clave === "" || Nombre === "" || Telefono === "") {
+                                                alert("Tiene campos vacíos, verifique.");
+                                                return false;
+                                            }
+                                        }
 </script>

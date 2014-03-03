@@ -49,7 +49,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
                             <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <li><a href="historial.jsp">Catalogo de Lotes</a></li>
+                            <!--li><a href="historial.jsp">Catalogo de Lotes</a></li-->
                             <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">

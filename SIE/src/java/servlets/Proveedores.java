@@ -5,10 +5,11 @@
  */
 package servlets;
 
-import conn.ConectionDB;
+import conn.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 public class Proveedores extends HttpServlet {
 
     ConectionDB con = new ConectionDB();
+    ConectionDB_SQLServer consql = new ConectionDB_SQLServer();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,15 +40,97 @@ public class Proveedores extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession sesion = request.getSession(true);
         try {
-            if (request.getParameter("accion").equals("guardar")) {
+            /*
+             *Para actualizar Registros
+             */
+            if (request.getParameter("accion").equals("actualizar")) {
+                consql.conectar();
+                con.conectar();
                 try {
-                    con.conectar();
-                    System.out.println("insert into provee_all values ('    "+request.getParameter("Clave")+"', '"+request.getParameter("Nombre")+"', '"+request.getParameter("Direccion")+"', '"+request.getParameter("Colonia")+"', '"+request.getParameter("Poblacion")+"', '"+request.getParameter("CP")+"', '"+request.getParameter("RFC")+"', '"+request.getParameter("CON")+"', '"+request.getParameter("CLS")+"', '"+request.getParameter("Telefono")+"', '"+request.getParameter("FAX")+"', '"+request.getParameter("Mail")+"', '"+request.getParameter("Observaciones")+"');");
-                    con.cierraConexion();
+                    String clave = request.getParameter("Clave");
+                    try{
+                    int largoClave = request.getParameter("Clave").length();
+                    int espacios = 5 - largoClave;
+                    for (int i = 1; i <= espacios; i++) {
+                        clave = " " + clave;
+                    }
+                    } catch (Exception e) {}
+                    consql.actualizar("update TB_Provee set F_ClaPrv='" + clave + "', F_NomPrv='" + request.getParameter("Nombre").toUpperCase() + "', F_Dir='" + request.getParameter("Direccion").toUpperCase() + "', F_Col='" + request.getParameter("Colonia").toUpperCase() + "', F_Pob='" + request.getParameter("Poblacion").toUpperCase() + "', F_CP='" + request.getParameter("CP").toUpperCase() + "', F_RFC='" + request.getParameter("RFC").toUpperCase() + "', F_Con='" + request.getParameter("CON").toUpperCase() + "', F_Cls='" + request.getParameter("CLS").toUpperCase() + "', F_Tel='" + request.getParameter("Telefono").toUpperCase() + "', F_Fax='" + request.getParameter("FAX").toUpperCase() + "', F_Mail='" + request.getParameter("Mail").toUpperCase() + "', F_Obs='" + request.getParameter("Observaciones").toUpperCase() + "' where F_ClaPrv='" + request.getParameter("id").toUpperCase() + "';");
+
+                    con.actualizar("update provee_all set F_ClaPrv='" + clave + "', F_nomprov='" + request.getParameter("Nombre").toUpperCase() + "', F_Dir='" + request.getParameter("Direccion").toUpperCase() + "', F_Col='" + request.getParameter("Colonia").toUpperCase() + "', F_Pob='" + request.getParameter("Poblacion").toUpperCase() + "', F_CP='" + request.getParameter("CP").toUpperCase() + "', F_RFC='" + request.getParameter("RFC").toUpperCase() + "', F_Con='" + request.getParameter("CON").toUpperCase() + "', F_Cls='" + request.getParameter("CLS").toUpperCase() + "', F_Tel='" + request.getParameter("Telefono").toUpperCase() + "', F_Fax='" + request.getParameter("FAX").toUpperCase() + "', F_Mail='" + request.getParameter("Mail").toUpperCase() + "', F_Obs='" + request.getParameter("Observaciones").toUpperCase() + "' where F_ClaPrv='" + request.getParameter("id").toUpperCase() + "';");
+
                 } catch (Exception e) {
+                    System.out.println(e.getMessage());
+
+                    out.println("<script>alert('Ya esta registrado ese proveedor')</script>");
+                    out.println("<script>window.location='editar_proveedor.jsp'</script>");
                 }
+                con.cierraConexion();
+                consql.cierraConexion();
+
+                out.println("<script>alert('Proveedor actualizado correctamente.')</script>");
+                out.println("<script>window.location='editar_proveedor.jsp'</script>");
             }
-        } catch (Exception e) {
+            /*
+             *Manda al jsp el id del registro a editar
+             */
+            if (request.getParameter("accion").equals("editar")) {
+                request.getSession().setAttribute("id", request.getParameter("id"));
+                response.sendRedirect("editar_proveedor.jsp");
+            }
+            /*
+             *Para eliminar registro
+             */
+            if (request.getParameter("accion").equals("eliminar")) {
+                consql.conectar();
+                con.conectar();
+                try {
+                    consql.insertar("delete from TB_Provee where F_ClaPrv = '" + request.getParameter("id") + "' ");
+                    con.insertar("delete from provee_all where F_ClaPrv = '" + request.getParameter("id") + "' ");
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+
+                    out.println("<script>alert('Error al eliminar')</script>");
+                    out.println("<script>window.location='catalogo.jsp'</script>");
+                }
+                con.cierraConexion();
+                consql.cierraConexion();
+
+                out.println("<script>alert('Se elimino el proveedor correctamente')</script>");
+                out.println("<script>window.location='catalogo.jsp'</script>");
+            }
+            /*
+             *Guarda Registros
+             */
+            if (request.getParameter("accion").equals("guardar")) {
+                consql.conectar();
+                con.conectar();
+                try {
+                    String clave = request.getParameter("Clave");
+                    try{
+                    int largoClave = request.getParameter("Clave").length();
+                    int espacios = 5 - largoClave;
+                    for (int i = 1; i <= espacios; i++) {
+                        clave = " " + clave;
+                    }
+                    } catch (Exception e) {}
+                    consql.insertar("insert into TB_Provee values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
+
+                    con.insertar("insert into provee_all values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+
+                    out.println("<script>alert('Ya esta registrado ese proveedor')</script>");
+                    out.println("<script>window.location='catalogo.jsp'</script>");
+                }
+                con.cierraConexion();
+                consql.cierraConexion();
+
+                out.println("<script>alert('Proveedor capturado correctamente.')</script>");
+                out.println("<script>window.location='catalogo.jsp'</script>");
+            }
+        } catch (SQLException e) {
 
         }
     }

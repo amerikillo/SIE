@@ -44,8 +44,12 @@
             while (rset.next()) {
                 folio_gnk = Integer.toString(Integer.parseInt(rset.getString(1)) + 1);
             }
+
             con.cierraConexion();
         } catch (Exception e) {
+        }
+        if (folio_gnk == null || folio_gnk.equals("null")) {
+            folio_gnk = "1";
         }
         fecha = "";
         folio_remi = "";
@@ -89,7 +93,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
                             <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <li><a href="historial.jsp">Catalogo de Lotes</a></li>
+                            <!--li><a href="historial.jsp">Catalogo de Lotes</a></li-->
                             <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -138,6 +142,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <select class="form-control" name="list_provee" onKeyPress="return tabular(event, this)" id="list_provee" onchange="proveedor();">
+                                        <option value="">Seleccione un Proveedor</option>
                                         <%
                                             try {
                                                 con.conectar();
@@ -151,7 +156,7 @@
                                         %>
                                     </select>
                                 </div>
-                                <label for="prov" class="col-sm-2 control-label"><a href="">Proveedor Nuevo</a></label>
+                                <label for="prov" class="col-sm-2 control-label"><a href="catalogo.jsp" target="_blank">Proveedor Nuevo</a></label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -218,7 +223,7 @@
                             <div class="form-group">
                                 <label for="origen" class="col-sm-2 control-label">Observaciones</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" name ="observaciones" placeholder="Observaciones" onKeyPress="return tabular(event, this)"><%=observaciones%></textarea>
+                                    <textarea class="form-control" name ="observaciones" id ="observaciones" placeholder="Observaciones" onKeyPress="return tabular(event, this)"><%=observaciones%></textarea>
                                 </div>
                             </div>
                         </div>
@@ -275,13 +280,17 @@
                                 <div class="col-sm-2">
                                     <input type="Lote" class="form-control" id="Lote" name="Lote" placeholder="Lote" onKeyPress="return tabular(event, this)" />
                                 </div>
+                                <label for="FecFab" class="col-sm-1 control-label">Fec Fab</label>
+                                <div class="col-sm-2">
+                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="return tabular(event, this)" />
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="Caducidad" class="col-sm-1 control-label">Cadu</label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="return tabular(event, this)" />
+                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="return tabular(event, this)" />
                                 </div>
                                 <label for="Cajas" class="col-sm-1 control-label">Cajas</label>
                                 <div class="col-sm-1">
@@ -318,10 +327,14 @@
                         <td></td>
                     </tr>
                     <%
+                        int banCompra = 0;
+                        String obser = "";
                         try {
                             con.conectar();
-                            ResultSet rset = con.consulta("select cod_bar, clave, descr, um, lote, cadu, piezas, resto, cant, id_cap_inv from datos_inv_cod where folio_gnk = '" + folio_gnk + "'");
+                            ResultSet rset = con.consulta("select cod_bar, clave, descr, um, lote, cadu, piezas, resto, cant, id_cap_inv, observaciones from datos_inv_cod where folio_gnk = '" + folio_gnk + "'");
                             while (rset.next()) {
+                                banCompra = 1;
+                                obser = rset.getString("observaciones");
                     %>
                     <tr>
                         <td><%=rset.getString(1)%></td>
@@ -334,6 +347,7 @@
                         <td><%=rset.getString(8)%></td>
                         <td><%=rset.getString(9)%></td>
                         <td>
+
                             <form method="get" action="Modificaciones">
                                 <input name="id" type="text" style="" class="hidden" value="<%=rset.getString(10)%>" />
                                 <button class="btn btn-warning" name="accion" value="modificar"><span class="glyphicon glyphicon-pencil" ></span></button>
@@ -348,6 +362,9 @@
 
                         }
                     %>
+                    <%
+                        if (banCompra == 1) {
+                    %>
                     <tr>
                         <td></td>
                         <td></td>
@@ -355,10 +372,22 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td><form action="Nuevo" method="post"><button  value="nuevo" name="accion" class="btn btn-warning btn-block">Nuevo</button></form></td>
+                        <td><form action="Nuevo" method="post">
+                                <input name="fol_gnkl" type="text" style="" class="hidden" value="<%=folio_gnk%>" />
+                                <input type="text" value="<%=obser%>" name="observaciones" class="hidden" />
+                                <button  value="Eliminar" name="accion" class="btn btn-danger btn-block" onclick="return confirm('Seguro que desea eliminar la compra?');">Eliminar</button>
+                            </form></td>
+                        <td><form action="Nuevo" method="post">
+                                <input name="fol_gnkl" type="text" style="" class="hidden" value="<%=folio_gnk%>" />
+                                <input type="text" value="<%=obser%>" name="observaciones" class="hidden" />
+                                <button  value="Guardar" name="accion" class="btn btn-warning btn-block" onclick="return confirm('Seguro que desea realizar la compra?');
+                                        return validaCompra();">Guardar</button></form></td>
                         <td><a href="Reporte.jsp" class="btn btn-success btn-block">Imprimir</a></td>
                     </tr>
+                    <%
+                        }
+                    %>
+
                 </table>
 
             </div>
@@ -388,6 +417,10 @@
                                     $(function() {
                                         $("#Caducidad").datepicker();
                                         $("#Caducidad").datepicker('option', {dateFormat: 'dd/mm/yy'});
+                                    });
+                                    $(function() {
+                                        $("#FecFab").datepicker();
+                                        $("#FecFab").datepicker('option', {dateFormat: 'dd/mm/yy'});
                                     });
 </script>
 <script>
@@ -491,7 +524,29 @@
         var Cajas = document.formulario1.Cajas.value;
         var pzsxcaja = document.formulario1.pzsxcaja.value;
         var Resto = document.formulario1.Resto.value;
-        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Cajas === "" || pzsxcaja === "" || Resto === "") {
+        var Obser = document.formulario1.observaciones.value;
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Cajas === "" || pzsxcaja === "" || Resto === "" || Obser === "") {
+            alert("Tiene campos vacíos, verifique.");
+            return false;
+        }
+        if ((Caducidad.match(RegExPattern)) && (Caducidad != '')) {
+            return true;
+        } else {
+            alert("Caducidad Incorrecta, verifique.");
+            return false;
+        }
+    }
+
+
+    function validaCompra() {
+        var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+        var folio_remi = document.formulario1.folio_remi.value;
+        var orden = document.formulario1.orden.value;
+        var provee = document.formulario1.provee.value;
+        var recib = document.formulario1.recib.value;
+        var entrega = document.formulario1.entrega.value;
+        var Obser = document.formulario1.observaciones.value;
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Cajas === "" || pzsxcaja === "" || Resto === "" || Obser === "") {
             alert("Tiene campos vacíos, verifique.");
             return false;
         }
