@@ -138,7 +138,7 @@
                             <div class="form-group">
                                 <label for="prov" class="col-sm-2 control-label">Proveedor</label>
                                 <div class="col-sm-3">
-                                    <input type="prov" class="form-control" id="provee" name="provee" placeholder="Proveedor" readonly="readonly" onKeyPress="return tabular(event, this)" value="<%=provee%>" />
+                                    <input type="prov" class="form-control" id="provee" name="provee" placeholder="Proveedor" readonly onKeyPress="return tabular(event, this)" value="<%=provee%>" />
                                 </div>
                                 <div class="col-sm-3">
                                     <select class="form-control" name="list_provee" onKeyPress="return tabular(event, this)" id="list_provee" onchange="proveedor();">
@@ -282,7 +282,7 @@
                                 </div>
                                 <label for="FecFab" class="col-sm-1 control-label">Fec Fab</label>
                                 <div class="col-sm-2">
-                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="return tabular(event, this)" />
+                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="LP_data();anade(this);return tabular(event, this)" />
                                 </div>
                             </div>
                         </div>
@@ -290,7 +290,7 @@
                             <div class="form-group">
                                 <label for="Caducidad" class="col-sm-1 control-label">Cadu</label>
                                 <div class="col-sm-2">
-                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="return tabular(event, this)" />
+                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="LP_data();anade(this);return tabular(event, this)" />
                                 </div>
                                 <label for="Cajas" class="col-sm-1 control-label">Cajas</label>
                                 <div class="col-sm-1">
@@ -321,6 +321,7 @@
                         <td>UM</td>
                         <td>Lote</td>
                         <td>Caducidad</td>
+                        <td>Cajas</td>
                         <td>No. de Piezas</td>
                         <td>Resto</td>
                         <td>Existencia</td>
@@ -331,7 +332,7 @@
                         String obser = "";
                         try {
                             con.conectar();
-                            ResultSet rset = con.consulta("select cod_bar, clave, descr, um, lote, cadu, piezas, resto, cant, id_cap_inv, observaciones from datos_inv_cod where folio_gnk = '" + folio_gnk + "'");
+                            ResultSet rset = con.consulta("select cod_bar, clave, descr, um, lote, cadu, piezas, resto, cant, id_cap_inv, observaciones, cajas from datos_inv_cod where folio_gnk = '" + folio_gnk + "'");
                             while (rset.next()) {
                                 banCompra = 1;
                                 obser = rset.getString("observaciones");
@@ -343,6 +344,7 @@
                         <td><%=rset.getString(4)%></td>
                         <td><%=rset.getString(5)%></td>
                         <td><%=rset.getString(6)%></td>
+                        <td><%=rset.getString(12)%></td>
                         <td><%=rset.getString(7)%></td>
                         <td><%=rset.getString(8)%></td>
                         <td><%=rset.getString(9)%></td>
@@ -371,18 +373,17 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td><form action="Nuevo" method="post">
+                        <td colspan="2"><form action="Nuevo" method="post">
                                 <input name="fol_gnkl" type="text" style="" class="hidden" value="<%=folio_gnk%>" />
                                 <input type="text" value="<%=obser%>" name="observaciones" class="hidden" />
-                                <button  value="Eliminar" name="accion" class="btn btn-danger btn-block" onclick="return confirm('Seguro que desea eliminar la compra?');">Eliminar</button>
+                                <button  value="Eliminar" name="accion" class="btn btn-danger btn-block" onclick="return confirm('Seguro que desea eliminar la compra?');">Cancelar Compra</button>
                             </form></td>
-                        <td><form action="Nuevo" method="post">
+                        <td colspan="2"><form action="Nuevo" method="post">
                                 <input name="fol_gnkl" type="text" style="" class="hidden" value="<%=folio_gnk%>" />
                                 <input type="text" value="<%=obser%>" name="observaciones" class="hidden" />
                                 <button  value="Guardar" name="accion" class="btn btn-warning btn-block" onclick="return confirm('Seguro que desea realizar la compra?');
-                                        return validaCompra();">Guardar</button></form></td>
-                        <td><a href="Reporte.jsp" class="btn btn-success btn-block">Imprimir</a></td>
+                                        return validaCompra();">Confirmar Compra</button></form></td>
+                        <td colspan="2"><a href="Reporte.jsp" class="btn btn-success btn-block">Imprimir</a></td>
                     </tr>
                     <%
                         }
@@ -568,3 +569,32 @@
         return /\d/.test(String.fromCharCode(keynum));
     }
 </script>
+
+<script language="javascript">
+    otro = 0;
+    function LP_data() {
+        var key = window.event.keyCode;//codigo de tecla. 
+        if (key < 48 || key > 57) {//si no es numero 
+            window.event.keyCode = 0;//anula la entrada de texto. 
+        }
+    }
+    function anade(esto) {
+        if (esto.value.length > otro) {
+            if (esto.value.length == 2 ) {
+                esto.value += "/";
+            }
+        }
+        if (esto.value.length > otro) {
+            if (esto.value.length == 5) {
+                esto.value += "/";
+            }
+        }
+        if (esto.value.length < otro) {
+            if (esto.value.length == 2 || esto.value.length == 5) {
+                esto.value = esto.value.substring(0, esto.value.length - 1);
+            }
+        }
+        otro = esto.value.length
+    }
+
+</script> 

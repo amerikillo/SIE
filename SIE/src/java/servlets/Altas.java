@@ -25,8 +25,8 @@ public class Altas extends HttpServlet {
 
     ConectionDB con = new ConectionDB();
     ConectionDB_SQLServer consql = new ConectionDB_SQLServer();
-        java.text.DateFormat df2 = new java.text.SimpleDateFormat("dd/MM/yyyy");
-        java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    java.text.DateFormat df2 = new java.text.SimpleDateFormat("dd/MM/yyyy");
+    java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -120,9 +120,18 @@ public class Altas extends HttpServlet {
         request.getSession().setAttribute("entrega", request.getParameter("entrega"));
         request.getSession().setAttribute("origen", request.getParameter("origen"));
         request.getSession().setAttribute("coincide", request.getParameter("coincide"));
-        request.getSession().setAttribute("observaciones", request.getParameter("observaciones"));
+        //para que acepte acentos en el request
+        byte[] a = request.getParameter("observaciones").getBytes("ISO-8859-1");
+        String value = new String(a, "UTF-8"); 
+        //
+        request.getSession().setAttribute("observaciones", value);
         request.getSession().setAttribute("clave", clave);
         request.getSession().setAttribute("descrip", descr);
+        
+        //String original = "hello world";
+        //byte[] utf8Bytes = original.getBytes("UTF8");
+        //String value = new String(utf8Bytes, "UTF-8"); 
+        //out.println(value);
         if (ban1 == 0) {
             out.println("<script>alert('Insumo Inexistente')</script>");
             out.println("<script>window.location='captura.jsp'</script>");

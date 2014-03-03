@@ -106,9 +106,13 @@ public class Proveedores extends HttpServlet {
                 consql.conectar();
                 con.conectar();
                 try {
-                    String clave = request.getParameter("Clave");
+                    String clave="";
+                    ResultSet rset = con.consulta("select MAX(F_ClaPrv) from provee_all");
+                    while(rset.next()){
+                        clave=""+(rset.getInt(1)+1);
+                    }
                     try{
-                    int largoClave = request.getParameter("Clave").length();
+                    int largoClave = clave.length();
                     int espacios = 5 - largoClave;
                     for (int i = 1; i <= espacios; i++) {
                         clave = " " + clave;

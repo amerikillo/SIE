@@ -61,7 +61,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>SIE</h1>
+            <h1>SIE</h1><h4>Sistema de Ingreso de Entradas</h4>
             <div class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
@@ -70,13 +70,12 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="main_menu.jsp">Sistema de Ingreso de Entradas</a>
+                        <a class="navbar-brand" href="main_menu.jsp">Inicio</a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
-                            <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <li><a href="historial.jsp">Catalogo de Lotes</a></li>
+                            <li><a href="captura.jsp">Captura de Insumos</a></li>
+                            <li class="active"><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
                             <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -93,19 +92,29 @@
                     <h3 class="panel-title">Actualizar Proveedor</h3>
                 </div>
                 <div class="panel-body ">
-                    <form class="form-horizontal" role="form" name="formulario1" id="formulario1" method="get" action="Proveedores">
+                    <form class="form-horizontal" role="form" name="formulario1" id="formulario1" method="post" action="Proveedores">
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="Clave" class="col-xs-1 control-label">Clave</label>
+                                <label for="Clave" class="col-xs-2 control-label">Clave</label>
                                 <div class="col-xs-1">
                                 <input type="text" class="hidden" id="id" name="id" placeholder="id" onKeyPress="return tabular(event, this)" autofocus value="<%=id%>" />
-                                    <input type="text" class="form-control" id="Clave" name="Clave" placeholder="Clave" onKeyPress="return tabular(event, this)" autofocus value="<%=cla_pro%>" />
+                                    <input type="text" class="form-control" id="Clave" name="Clave" placeholder="Clave" onKeyPress="return tabular(event, this)" value="<%=cla_pro%>" readonly />
                                 </div>
                                 <label for="Nombre" class="col-xs-1 control-label">Nombre</label>
-                                <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Nombre" onKeyPress="return tabular(event, this)" value="<%=nom_pro%>"  />
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Nombre" onKeyPress="return tabular(event, this)" autofocus value="<%=nom_pro%>"  />
                                 </div>
-                                <label for="Direccion" class="col-xs-1 control-label">Dirección</label>
+                                <label for="Telefono" class="col-xs-1 control-label">Telefono</label>
+                                <div class="col-xs-2">
+                                    <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono" onKeyPress="LP_data();anade(this);return tabular(event, this)" value="<%=tel_pro%>" maxlength="14" /><h6>(XXX) XXX-XXXX</h6>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                            <label for="Direccion" class="col-xs-2 control-label">Dirección</label>
                                 <div class="col-xs-3">
                                     <input type="text" class="form-control" id="Direccion" name="Direccion" placeholder="Direccion" onKeyPress="return tabular(event, this)" value="<%=dir_pro%>"  />
                                 </div>
@@ -113,16 +122,14 @@
                                 <div class="col-xs-2">
                                     <input type="text" class="form-control" id="Colonia" name="Colonia" placeholder="Colonia" onKeyPress="return tabular(event, this)" value="<%=col_pro%>"  />
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label for="Poblacion" class="col-xs-1 control-label">Pob</label>
-                                <div class="col-xs-1">
+                                <label for="Poblacion" class="col-xs-1 control-label">Población</label>
+                                <div class="col-xs-2">
                                     <input type="text" class="form-control" id="Poblacion" name="Poblacion" placeholder="Poblacion" onKeyPress="return tabular(event, this)"  value="<%=pob_pro%>"  />
                                 </div>
-                                <label for="CP" class="col-xs-1 control-label">C.P.</label>
-                                <div class="col-xs-1">
+                        </div>
+                        <div class="form-group">
+                                <label for="CP" class="col-xs-2 control-label">C.P.</label>
+                                <div class="col-xs-2">
                                     <input type="text" class="form-control" id="CP" name="CP" placeholder="CP" onKeyPress="return tabular(event, this)" value="<%=cp_pro%>"  />
                                 </div>
                                 <label for="RFC" class="col-xs-1 control-label">RFC</label>
@@ -137,14 +144,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="CLS" class="col-xs-1 control-label">CLS</label>
-                                <div class="col-xs-1">
+                                <label for="CLS" class="col-xs-2 control-label">CLS</label>
+                                <div class="col-xs-2">
                                     <input type="CLS" class="form-control" id="CLS" name="CLS" placeholder="CLS" onKeyPress="return tabular(event, this)"  value="<%=cls_pro%>"  />
                                 </div>
-                                <label for="Telefono" class="col-xs-1 control-label">Telefono</label>
-                                <div class="col-xs-1">
-                                    <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono" onKeyPress="return tabular(event, this)" value="<%=tel_pro%>"  />
-                                </div>
+                                
                                 <label for="FAX" class="col-xs-1 control-label">FAX</label>
                                 <div class="col-xs-3">
                                     <input type="text" class="form-control" id="FAX" name="FAX" placeholder="FAX" onKeyPress="return tabular(event, this)" value="<%=fax_pro%>"  />
@@ -200,3 +204,36 @@
                                             }
                                         }
 </script>
+<script language="javascript">
+    otro = 0;
+    function LP_data() {
+        var key = window.event.keyCode;//codigo de tecla. 
+        if (key < 48 || key > 57) {//si no es numero 
+            window.event.keyCode = 0;//anula la entrada de texto. 
+        }
+    }
+    function anade(esto) {
+        if (esto.value.length === 0) {
+            if (esto.value.length == 0 ) {
+                esto.value += "(";
+            }
+        }
+        if (esto.value.length > otro) {
+            if (esto.value.length == 4 ) {
+                esto.value += ") ";
+            }
+        }
+        if (esto.value.length > otro) {
+            if (esto.value.length == 9) {
+                esto.value += "-";
+            }
+        }
+        if (esto.value.length < otro) {
+            if (esto.value.length == 4 || esto.value.length == 9) {
+                esto.value = esto.value.substring(0, esto.value.length - 1);
+            }
+        }
+        otro = esto.value.length
+    }
+
+</script> 

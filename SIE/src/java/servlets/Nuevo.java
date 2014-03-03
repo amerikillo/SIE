@@ -66,8 +66,9 @@ public class Nuevo extends HttpServlet {
                     request.getSession().setAttribute("clave", "");
                     request.getSession().setAttribute("descrip", "");
                 } catch (Exception e) {
-
                 }
+
+                out.println("<script>alert('Compra cancelada')</script>");
             }
             if (request.getParameter("accion").equals("Guardar")) {
                 System.out.println(request.getParameter("observaciones"));
@@ -146,10 +147,12 @@ public class Nuevo extends HttpServlet {
                 request.getSession().setAttribute("clave", "");
                 request.getSession().setAttribute("descrip", "");
 
+                out.println("<script>alert('Compra correcta')</script>");
             }
         } catch (Exception e) {
         }
-        response.sendRedirect("captura.jsp");
+        out.println("<script>window.location='captura.jsp'</script>");
+        //response.sendRedirect("captura.jsp");
     }
 
     public String insertaObservacionesCompra(String obser) {
@@ -266,8 +269,8 @@ public class Nuevo extends HttpServlet {
 
     public String idLote(String clave, String lote, String fec_cad, String cant, double costo, String origen, String fec_fab) {
         String idLote = "";
-        int exi=0;
-        double  cos=0;
+        int exi = 0;
+        double cos = 0;
         int ban = 0;
         try {
             consql.conectar();
@@ -275,8 +278,8 @@ public class Nuevo extends HttpServlet {
                 ResultSet rset = consql.consulta("select F_FolLot, F_ExiLot, F_CosLot from TB_Lote where F_ClaPro = '" + clave + "' and F_ClaLot = '" + lote + "' ");
                 while (rset.next()) {
                     idLote = rset.getString("F_FolLot");
-                    exi=rset.getInt("F_ExiLot");
-                    cos=rset.getDouble("F_CosLot");
+                    exi = rset.getInt("F_ExiLot");
+                    cos = rset.getDouble("F_CosLot");
                     ban = 1;
                 }
             } catch (SQLException e) {
@@ -289,9 +292,9 @@ public class Nuevo extends HttpServlet {
                 }
                 consql.insertar("insert into TB_Lote values ('" + lote + "', '" + clave + "', '" + fec_cad + "', '" + cant + "', '" + costo + "', '" + idLote + "', '" + origen + "', '0000', '" + fec_fab + "') ");
             } else {
-                int texi=exi+Integer.parseInt(cant);
-                double totcos=cos+costo;
-                consql.actualizar("update TB_Lote set F_ExiLot = '"+texi+"', F_CosLot = '"+totcos+"' where F_FolLot = '"+idLote+"' ");
+                int texi = exi + Integer.parseInt(cant);
+                double totcos = cos + costo;
+                consql.actualizar("update TB_Lote set F_ExiLot = '" + texi + "', F_CosLot = '" + totcos + "' where F_FolLot = '" + idLote + "' ");
             }
             consql.cierraConexion();
         } catch (SQLException e) {
