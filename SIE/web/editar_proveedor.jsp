@@ -25,28 +25,27 @@
     String cla_pro = "", nom_pro = "", dir_pro = "", col_pro = "", pob_pro = "", cp_pro = "", rfc_pro = "", con_pro = "", cls_pro = "", tel_pro = "", fax_pro = "", mail_pro = "", obs_pro = "";
     try {
         con.conectar();
-        ResultSet rset = con.consulta("select * from provee_all where F_ClaPrv = '"+id+"' ");
-        while(rset.next())
-        {
-            cla_pro=rset.getString(1);
-            nom_pro=rset.getString(2);
-            dir_pro=rset.getString(3);
-            col_pro=rset.getString(4);
-            pob_pro=rset.getString(5);
-            cp_pro=rset.getString(6);
-            rfc_pro=rset.getString(7);
-            con_pro=rset.getString(8);
-            cls_pro=rset.getString(9);
-            tel_pro=rset.getString(10);
-            fax_pro=rset.getString(11);
-            mail_pro=rset.getString(12);
-            obs_pro=rset.getString(13);
+        ResultSet rset = con.consulta("select * from provee_all where F_ClaPrv = '" + id + "' ");
+        while (rset.next()) {
+            cla_pro = rset.getString(1);
+            nom_pro = rset.getString(2);
+            dir_pro = rset.getString(3);
+            col_pro = rset.getString(4);
+            pob_pro = rset.getString(5);
+            cp_pro = rset.getString(6);
+            rfc_pro = rset.getString(7);
+            con_pro = rset.getString(8);
+            cls_pro = rset.getString(9);
+            tel_pro = rset.getString(10);
+            fax_pro = rset.getString(11);
+            mail_pro = rset.getString(12);
+            obs_pro = rset.getString(13);
         }
         con.cierraConexion();
     } catch (Exception e) {
     }
-    if (cla_pro==null){
-        
+    if (cla_pro == null) {
+
     }
 %>
 <html>
@@ -61,7 +60,8 @@
     </head>
     <body>
         <div class="container">
-            <h1>SIE</h1><h4>Sistema de Ingreso de Entradas</h4>
+            <h1>SIALSS</h1>
+            <h4>SISTEMA INTEGRAL DE ADMINISTRACIÓN Y LOGÍSTICA PARA SERVICIOS DE SALUD</h4>
             <div class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
@@ -74,9 +74,24 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="captura.jsp">Captura de Insumos</a></li>
-                            <li class="active"><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">SIE <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="captura.jsp">Captura de Insumos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                                    <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">ADASU<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="captura.jsp">Captura de Insumos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                                    <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
@@ -97,7 +112,7 @@
                             <div class="form-group">
                                 <label for="Clave" class="col-xs-2 control-label">Clave</label>
                                 <div class="col-xs-1">
-                                <input type="text" class="hidden" id="id" name="id" placeholder="id" onKeyPress="return tabular(event, this)" autofocus value="<%=id%>" />
+                                    <input type="text" class="hidden" id="id" name="id" placeholder="id" onKeyPress="return tabular(event, this)" autofocus value="<%=id%>" />
                                     <input type="text" class="form-control" id="Clave" name="Clave" placeholder="Clave" onKeyPress="return tabular(event, this)" value="<%=cla_pro%>" readonly />
                                 </div>
                                 <label for="Nombre" class="col-xs-1 control-label">Nombre</label>
@@ -106,15 +121,17 @@
                                 </div>
                                 <label for="Telefono" class="col-xs-1 control-label">Telefono</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono" onKeyPress="LP_data();anade(this);return tabular(event, this)" value="<%=tel_pro%>" maxlength="14" /><h6>(XXX) XXX-XXXX</h6>
+                                    <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono" onKeyPress="LP_data();
+                                            anade(this);
+                                            return tabular(event, this)" value="<%=tel_pro%>" maxlength="14" /><h6>(XXX) XXX-XXXX</h6>
                                 </div>
-                                
-                                
+
+
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group">
-                            <label for="Direccion" class="col-xs-2 control-label">Dirección</label>
+                                <label for="Direccion" class="col-xs-2 control-label">Dirección</label>
                                 <div class="col-xs-3">
                                     <input type="text" class="form-control" id="Direccion" name="Direccion" placeholder="Direccion" onKeyPress="return tabular(event, this)" value="<%=dir_pro%>"  />
                                 </div>
@@ -126,8 +143,8 @@
                                 <div class="col-xs-2">
                                     <input type="text" class="form-control" id="Poblacion" name="Poblacion" placeholder="Poblacion" onKeyPress="return tabular(event, this)"  value="<%=pob_pro%>"  />
                                 </div>
-                        </div>
-                        <div class="form-group">
+                            </div>
+                            <div class="form-group">
                                 <label for="CP" class="col-xs-2 control-label">C.P.</label>
                                 <div class="col-xs-2">
                                     <input type="text" class="form-control" id="CP" name="CP" placeholder="CP" onKeyPress="return tabular(event, this)" value="<%=cp_pro%>"  />
@@ -148,7 +165,7 @@
                                 <div class="col-xs-2">
                                     <input type="CLS" class="form-control" id="CLS" name="CLS" placeholder="CLS" onKeyPress="return tabular(event, this)"  value="<%=cls_pro%>"  />
                                 </div>
-                                
+
                                 <label for="FAX" class="col-xs-1 control-label">FAX</label>
                                 <div class="col-xs-3">
                                     <input type="text" class="form-control" id="FAX" name="FAX" placeholder="FAX" onKeyPress="return tabular(event, this)" value="<%=fax_pro%>"  />
@@ -214,12 +231,12 @@
     }
     function anade(esto) {
         if (esto.value.length === 0) {
-            if (esto.value.length == 0 ) {
+            if (esto.value.length == 0) {
                 esto.value += "(";
             }
         }
         if (esto.value.length > otro) {
-            if (esto.value.length == 4 ) {
+            if (esto.value.length == 4) {
                 esto.value += ") ";
             }
         }

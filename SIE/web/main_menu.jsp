@@ -34,7 +34,8 @@
     </head>
     <body>
         <div class="container">
-            <h1>SIE</h1>
+            <h1>SIALSS</h1>
+            <h4>SISTEMA INTEGRAL DE ADMINISTRACIÓN Y LOGÍSTICA PARA SERVICIOS DE SALUD</h4>
             <div class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
@@ -43,14 +44,28 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="main_menu.jsp">Sistema de Ingreso de Entradas</a>
+                        <a class="navbar-brand" href="main_menu.jsp">Inicio</a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
-                            <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <!--li><a href="historial.jsp">Catalogo de Lotes</a></li-->
-                            <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">SIE <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="captura.jsp">Captura de Insumos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                                    <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">ADASU<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="captura.jsp">Captura de Insumos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                                    <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>

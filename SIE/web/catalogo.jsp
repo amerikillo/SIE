@@ -29,12 +29,14 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" href="css/cupertino/jquery-ui-1.10.3.custom.css" />
         <link href="css/navbar-fixed-top.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
         <!---->
         <title>SIE Sistema de Ingreso de Entradas</title>
     </head>
     <body>
         <div class="container">
-            <h1>SIE</h1>
+            <h1>SIALSS</h1>
+            <h4>SISTEMA INTEGRAL DE ADMINISTRACIÓN Y LOGÍSTICA PARA SERVICIOS DE SALUD</h4>
             <div class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
@@ -43,14 +45,28 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="main_menu.jsp">Sistema de Ingreso de Entradas</a>
+                        <a class="navbar-brand" href="main_menu.jsp">Inicio</a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="captura.jsp">Captura de Insumos</a></li>
-                            <li class="active"><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <!--li><a href="historial.jsp">Catalogo de Lotes</a></li-->
-                            <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">SIE <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="captura.jsp">Captura de Insumos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                                    <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">ADASU<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="captura.jsp">Captura de Insumos</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
+                                    <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+                                </ul>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
@@ -152,47 +168,51 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>Clave</td>
-                            <td>Nombre</td>
-                            <td>Teléfono</td>
-                            <td>Opciones</td>
-                        </tr>
-                        <%
-                            try {
-                                con.conectar();
-                                ResultSet rset = con.consulta("select * from provee_all order by F_Claprv asc");
-                                while (rset.next()) {
-                        %>
-                        <tr>
-                            <td><small><%=rset.getString(1)%></small></td>
-                            <td><small><%=rset.getString(2)%></small></td>
-                            <td><small><%=rset.getString(10)%></small></td>
-                            <td>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <form class="form-horizontal" role="form" name="formulario2" id="formulario2" method="post" action="Proveedores" >
-                                            <div  class="col-xs-1 ">
-                                                <button class="btn btn-warning" name="accion" value="editar"><span class="glyphicon glyphicon-pencil" ></span></button>
-                                            </div>
-                                            <div class="col-xs-1">
-                                                <input name="id" id="id" type="text" class="hidden" value="<%=rset.getString(1)%>" />
-                                            </div>
-                                            <div  class="col-xs-1 ">
-                                                <button class="btn btn-danger" onclick="return confirm('¿Seguro de que desea eliminar?');" name="accion" value="eliminar"><span class="glyphicon glyphicon-remove"></span></button>
-                                            </div>
-                                        </form>
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datosProv">
+                        <thead>
+                            <tr>
+                                <td>Clave</td>
+                                <td>Nombre</td>
+                                <td>Teléfono</td>
+                                <td>Opciones</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                try {
+                                    con.conectar();
+                                    ResultSet rset = con.consulta("select * from provee_all order by F_Claprv asc");
+                                    while (rset.next()) {
+                            %>
+                            <tr class="odd gradeX">
+                                <td><small><%=rset.getString(1)%></small></td>
+                                <td><small><%=rset.getString(2)%></small></td>
+                                <td><small><%=rset.getString(10)%></small></td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <form class="form-horizontal" role="form" name="formulario2" id="formulario2" method="post" action="Proveedores" >
+                                                <div  class="col-xs-1 ">
+                                                    <button class="btn btn-warning" name="accion" value="editar"><span class="glyphicon glyphicon-pencil" ></span></button>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <input name="id" id="id" type="text" class="hidden" value="<%=rset.getString(1)%>" />
+                                                </div>
+                                                <div  class="col-xs-1 ">
+                                                    <button class="btn btn-danger" onclick="return confirm('¿Seguro de que desea eliminar?');" name="accion" value="eliminar"><span class="glyphicon glyphicon-remove"></span></button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <%
+                                </td>
+                            </tr>
+                            <%
+                                    }
+                                    con.cierraConexion();
+                                } catch (Exception e) {
                                 }
-                                con.cierraConexion();
-                            } catch (Exception e) {
-                            }
-                        %>
+                            %>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -215,16 +235,23 @@
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
+<script src="js/jquery.dataTables.js"></script>
+<script src="js/dataTables.bootstrap.js"></script>
 <script>
-                                                    function valida_alta() {
-                                                        var Clave = document.formulario1.Clave.value;
-                                                        var Nombre = document.formulario1.Nombre.value;
-                                                        var Telefono = document.formulario1.Telefono.value;
-                                                        if (Clave === "" || Nombre === "" || Telefono === "") {
-                                                            alert("Tiene campos vacíos, verifique.");
-                                                            return false;
-                                                        }
-                                                    }
+                                                    $(document).ready(function() {
+                                                        $('#datosProv').dataTable();
+                                                    });
+</script>
+<script>
+    function valida_alta() {
+        var Clave = document.formulario1.Clave.value;
+        var Nombre = document.formulario1.Nombre.value;
+        var Telefono = document.formulario1.Telefono.value;
+        if (Clave === "" || Nombre === "" || Telefono === "") {
+            alert("Tiene campos vacíos, verifique.");
+            return false;
+        }
+    }
 </script>
 <script language="javascript">
     otro = 0;
@@ -236,12 +263,12 @@
     }
     function anade(esto) {
         if (esto.value.length === 0) {
-            if (esto.value.length == 0 ) {
+            if (esto.value.length == 0) {
                 esto.value += "(";
             }
         }
         if (esto.value.length > otro) {
-            if (esto.value.length == 4 ) {
+            if (esto.value.length == 4) {
                 esto.value += ") ";
             }
         }

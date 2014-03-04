@@ -103,7 +103,9 @@ public class Altas extends HttpServlet {
                     }
                     int cantidad = (cajas * piezas) + resto;
                     con.conectar();
-                    con.insertar("insert into datos_inv_cod values ('" + request.getParameter("cb") + "', '" + cla_pro + "', '" + lot_pro + "', '" + request.getParameter("descripci") + "', '" + request.getParameter("Caducidad") + "' ,'NUEVO', '" + cantidad + "', '" + request.getParameter("provee") + "', '" + sesion.getAttribute("nombre") + "', CURDATE(), 'BODEGA EDO DURANGO', '0', '" + cajas + "', '" + piezas + "', '" + resto + "', '" + request.getParameter("Marca") + "', '" + request.getParameter("pres") + "', '" + request.getParameter("origen") + "', '" + request.getParameter("coincide") + "', '" + request.getParameter("folio") + "', '" + request.getParameter("folio_remi") + "', '" + request.getParameter("orden") + "', '" + request.getParameter("FecFab") + "', '" + request.getParameter("observaciones") + "') ");
+                    byte[] a = request.getParameter("observaciones").getBytes("ISO-8859-1");
+                    String value = new String(a, "UTF-8");
+                    con.insertar("insert into datos_inv_cod values ('" + request.getParameter("cb") + "', '" + cla_pro + "', '" + lot_pro + "', '" + request.getParameter("descripci") + "', '" + request.getParameter("Caducidad") + "' ,'NUEVO', '" + cantidad + "', '" + request.getParameter("provee") + "', '" + sesion.getAttribute("nombre") + "', CURDATE(), 'BODEGA EDO DURANGO', '0', '" + cajas + "', '" + piezas + "', '" + resto + "', '" + request.getParameter("Marca") + "', '" + request.getParameter("pres") + "', '" + request.getParameter("origen") + "', '" + request.getParameter("coincide") + "', '" + request.getParameter("folio") + "', '" + request.getParameter("folio_remi") + "', '" + request.getParameter("orden") + "', '" + request.getParameter("FecFab") + "', '" + value + "') ");
                     con.cierraConexion();
                 } catch (Exception e) {
 
@@ -122,12 +124,12 @@ public class Altas extends HttpServlet {
         request.getSession().setAttribute("coincide", request.getParameter("coincide"));
         //para que acepte acentos en el request
         byte[] a = request.getParameter("observaciones").getBytes("ISO-8859-1");
-        String value = new String(a, "UTF-8"); 
+        String value = new String(a, "UTF-8");
         //
         request.getSession().setAttribute("observaciones", value);
         request.getSession().setAttribute("clave", clave);
         request.getSession().setAttribute("descrip", descr);
-        
+
         //String original = "hello world";
         //byte[] utf8Bytes = original.getBytes("UTF8");
         //String value = new String(utf8Bytes, "UTF-8"); 

@@ -48,13 +48,14 @@ public class Proveedores extends HttpServlet {
                 con.conectar();
                 try {
                     String clave = request.getParameter("Clave");
-                    try{
-                    int largoClave = request.getParameter("Clave").length();
-                    int espacios = 5 - largoClave;
-                    for (int i = 1; i <= espacios; i++) {
-                        clave = " " + clave;
+                    try {
+                        int largoClave = request.getParameter("Clave").length();
+                        int espacios = 5 - largoClave;
+                        for (int i = 1; i <= espacios; i++) {
+                            clave = " " + clave;
+                        }
+                    } catch (Exception e) {
                     }
-                    } catch (Exception e) {}
                     consql.actualizar("update TB_Provee set F_ClaPrv='" + clave + "', F_NomPrv='" + request.getParameter("Nombre").toUpperCase() + "', F_Dir='" + request.getParameter("Direccion").toUpperCase() + "', F_Col='" + request.getParameter("Colonia").toUpperCase() + "', F_Pob='" + request.getParameter("Poblacion").toUpperCase() + "', F_CP='" + request.getParameter("CP").toUpperCase() + "', F_RFC='" + request.getParameter("RFC").toUpperCase() + "', F_Con='" + request.getParameter("CON").toUpperCase() + "', F_Cls='" + request.getParameter("CLS").toUpperCase() + "', F_Tel='" + request.getParameter("Telefono").toUpperCase() + "', F_Fax='" + request.getParameter("FAX").toUpperCase() + "', F_Mail='" + request.getParameter("Mail").toUpperCase() + "', F_Obs='" + request.getParameter("Observaciones").toUpperCase() + "' where F_ClaPrv='" + request.getParameter("id").toUpperCase() + "';");
 
                     con.actualizar("update provee_all set F_ClaPrv='" + clave + "', F_nomprov='" + request.getParameter("Nombre").toUpperCase() + "', F_Dir='" + request.getParameter("Direccion").toUpperCase() + "', F_Col='" + request.getParameter("Colonia").toUpperCase() + "', F_Pob='" + request.getParameter("Poblacion").toUpperCase() + "', F_CP='" + request.getParameter("CP").toUpperCase() + "', F_RFC='" + request.getParameter("RFC").toUpperCase() + "', F_Con='" + request.getParameter("CON").toUpperCase() + "', F_Cls='" + request.getParameter("CLS").toUpperCase() + "', F_Tel='" + request.getParameter("Telefono").toUpperCase() + "', F_Fax='" + request.getParameter("FAX").toUpperCase() + "', F_Mail='" + request.getParameter("Mail").toUpperCase() + "', F_Obs='" + request.getParameter("Observaciones").toUpperCase() + "' where F_ClaPrv='" + request.getParameter("id").toUpperCase() + "';");
@@ -106,18 +107,19 @@ public class Proveedores extends HttpServlet {
                 consql.conectar();
                 con.conectar();
                 try {
-                    String clave="";
+                    String clave = "";
                     ResultSet rset = con.consulta("select MAX(F_ClaPrv) from provee_all");
-                    while(rset.next()){
-                        clave=""+(rset.getInt(1)+1);
+                    while (rset.next()) {
+                        clave = "" + ((Integer.parseInt(rset.getString(1).trim())) + 1);
                     }
-                    try{
-                    int largoClave = clave.length();
-                    int espacios = 5 - largoClave;
-                    for (int i = 1; i <= espacios; i++) {
-                        clave = " " + clave;
+                    try {
+                        int largoClave = clave.length();
+                        int espacios = 5 - largoClave;
+                        for (int i = 1; i <= espacios; i++) {
+                            clave = " " + clave;
+                        }
+                    } catch (Exception e) {
                     }
-                    } catch (Exception e) {}
                     consql.insertar("insert into TB_Provee values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
 
                     con.insertar("insert into provee_all values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
