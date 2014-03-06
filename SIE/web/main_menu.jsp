@@ -55,6 +55,7 @@
                                     <li class="divider"></li>
                                     <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
                                     <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+<<<<<<< HEAD
                                     <li class="divider"></li>
                                     <li><a href="http://localhost:8088/Ubi">Ubicaciones</a></li>
                                     <li class="divider"></li>
@@ -62,6 +63,11 @@
                                 </ul>
                             </li>
                             <!--li class="dropdown">
+=======
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+>>>>>>> FETCH_HEAD
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">ADASU<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="captura.jsp">Captura de Insumos</a></li>
@@ -69,6 +75,7 @@
                                     <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
                                     <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                                 </ul>
+<<<<<<< HEAD
                             </li-->
                             <%
                                 if (usua.equals("root")) {
@@ -82,6 +89,9 @@
                             </li>
                             <%                                }
                             %>
+=======
+                            </li>
+>>>>>>> FETCH_HEAD
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
@@ -92,7 +102,11 @@
             </div>
 
             <div class="text-center">
+<<<<<<< HEAD
                 <br /><br /><br />
+=======
+            <br /><br /><br />
+>>>>>>> FETCH_HEAD
                 <img src="imagenes/Logo GNK claro2.jpg" width="200" height="100" alt="Logo GNK claro2"/>
             </div>
         </div>

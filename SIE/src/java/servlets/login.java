@@ -47,14 +47,13 @@ public class login extends HttpServlet {
     private void lectorBD(Boolean estado, String aviso) {
         if (estado) {
             try {
-                String qry_cons = "select id_usu, user from usuarios where user='" + this.nombre + "' and pass=password('" + this.pass + "')";
-                System.out.println("select id_usu from usuarios where user='" + this.nombre + "' and pass=password('" + this.pass + "')");
+                String qry_cons = "select id_usuario, nombre from usuarios where nombre='" + this.nombre + "' and contra=password('" + this.pass + "')";
                 obj.conectar();
                 ResultSet consulta = null;
                 consulta = obj.consulta(qry_cons);
                 if (consulta.next()) {
                     exito = true;
-                    this.AttNombre = consulta.getString("user");
+                    this.AttNombre = consulta.getString("nombre");
 
                 } else {
                     exito = false;

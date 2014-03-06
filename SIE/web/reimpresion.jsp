@@ -84,6 +84,7 @@
                                     <li class="divider"></li>
                                     <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
                                     <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
+<<<<<<< HEAD
                                     <li class="divider"></li>
                                     <li><a href="http://localhost:8088/Ubi">Ubicaciones</a></li>
                                 </ul>
@@ -100,6 +101,10 @@
                             </li>
                             <%                                }
                             %>
+=======
+                                </ul>
+                            </li>
+>>>>>>> FETCH_HEAD
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
