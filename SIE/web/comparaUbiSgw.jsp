@@ -22,6 +22,15 @@
     }
     ConectionDB con = new ConectionDB();
     ConectionDB_SQLServer consql = new ConectionDB_SQLServer();
+    String ceros = "";
+    try {
+        ceros = request.getParameter("ceros");
+    } catch (Exception e) {
+    }
+    if (ceros == null) {
+        ceros = "";
+    }
+
     try {
         if (request.getParameter("accion").equals("lote")) {
             try {
@@ -38,11 +47,7 @@
                     ResultSet rsetsql = consql.consulta("select F_ClaPro, F_ClaLot, sum(F_ExiLot) from TB_Lote group by F_ClaPro, F_Clalot");
                     while (rsetsql.next()) {
                         String clave = "";
-                        if ((Double.parseDouble(rsetsql.getString("F_ClaPro")) < 1000)) {
-                            clave = (rsetsql.getString("F_ClaPro").substring(1));
-                        } else {
-                            clave = rsetsql.getString("F_ClaPro");
-                        }
+                        clave = rsetsql.getString("F_ClaPro");
                         con.insertar("insert into comparativa values('" + clave + "', '" + rsetsql.getString(2) + "', '" + rsetsql.getString(3) + "', 'SGW', '0')");
                     }
 
@@ -74,11 +79,7 @@
                     ResultSet rsetsql = consql.consulta("select F_ClaPro, sum(F_ExiLot) from TB_Lote group by F_ClaPro");
                     while (rsetsql.next()) {
                         String clave = "";
-                        if ((Double.parseDouble(rsetsql.getString("F_ClaPro")) < 1000)) {
-                            clave = (rsetsql.getString("F_ClaPro").substring(1));
-                        } else {
-                            clave = rsetsql.getString("F_ClaPro");
-                        }
+                        clave = rsetsql.getString("F_ClaPro");
                         con.insertar("insert into comparativa values('" + clave + "', '-', '" + rsetsql.getString(2) + "', 'SGW', '0')");
                     }
 
@@ -97,8 +98,8 @@
 
         }
     } catch (Exception e) {
-
     }
+
 
 %>
 <html>
@@ -171,13 +172,16 @@
             </div>
 
             <div class="text-center">
-                <form method="get">
+                <form method="post" name="form" id="form">
                     <div class="row">
-                        <div class="col-lg-3">Filtrar por:</div>
+                        <div class="col-lg-1">Filtrar por:</div>
+                        <div class="col-lg-2">Cantidades en '0' <input name="ceros" type="checkbox" <% if (ceros.equals("on")) {
+                                out.println("checked");
+                            }%> onclick="this.form.submit();"></div>
                         <div class="col-lg-2"><button class="btn btn-block btn-primary" name="accion" value="clave">Clave</button></div>
                         <div class="col-lg-2"><button class="btn btn-block btn-success" name="accion" value="lote">Clave y Lote</button></div>
-                        <div class="col-lg-2"><a href="excel/excelDiferencias.jsp?accion=lote" target="_blank" class="btn btn-block btn-primary ">Exportar sin Lote</a></div>
-                        <div class="col-lg-2"><a href="excel/excelDiferencias.jsp?accion=clave" target="_blank" class="btn btn-block btn-success ">Exportar con Lote</a></div>
+                        <div class="col-lg-2"><a href="excel/excelDiferencias.jsp?accion=clave&ceros=<%=ceros%>" target="_blank" class="btn btn-block btn-primary ">Exportar sin Lote</a></div>
+                        <div class="col-lg-2"><a href="excel/excelDiferencias.jsp?accion=lote&ceros=<%=ceros%>" target="_blank" class="btn btn-block btn-success ">Exportar con Lote</a></div>
                     </div>
                 </form>
                 <br />
@@ -198,25 +202,40 @@
                                 try {
                                     con.conectar();
                                     try {
-                                        ResultSet rset = con.consulta("select c.cla_pro, cm.descrip, c.lot_pro, c.can_pro from comparativa c, clave_med cm where c.cla_pro = cm.clave and c.base = 'SGW' order by c.cla_pro+0 asc ");
+                                        ResultSet rset = con.consulta("select c.cla_pro, cm.descrip, c.lot_pro from comparativa c, clave_med cm where c.cla_pro = cm.clave order by c.cla_pro+0 asc ");
                                         while (rset.next()) {
                                             int c1 = 0, c2 = 0, c3 = 0;
-                                            c1 = (int) Double.parseDouble(rset.getString(4));
-                                            ResultSet rset2 = con.consulta("select can_pro from comparativa where cla_pro = '" + rset.getString(1) + "' and lot_pro = '" + rset.getString(3) + "' and base = 'UBICACIONES' ");
+                                            
+                                            ResultSet rset2 = con.consulta("select can_pro from comparativa where cla_pro = '" + rset.getString(1) + "' and lot_pro = '" + rset.getString(3) + "' and base = 'SGW' ");
+                                            while (rset2.next()) {
+                                                c1 = (int) Double.parseDouble(rset2.getString(1));
+                                            }
+                                            rset2 = con.consulta("select can_pro from comparativa where cla_pro = '" + rset.getString(1) + "' and lot_pro = '" + rset.getString(3) + "' and base = 'UBICACIONES' ");
                                             while (rset2.next()) {
                                                 c2 = (int) Double.parseDouble(rset2.getString(1));
                                             }
 
                                             c3 = c1 - c2;
-                                            if (c3!=0){
-                                            out.println("<tr>");
-                                            out.println("<td>" + rset.getString(1) + "</td>");
-                                            out.println("<td>" + rset.getString(2) + "</td>");
-                                            out.println("<td>" + rset.getString(3) + "</td>");
-                                            out.println("<td>" + c1 + "</td>");
-                                            out.println("<td>" + c2 + "</td>");
-                                            out.println("<td>" + c3 + "</td>");
-                                            out.println("</tr>");
+                                            if (ceros.equals("on")) {
+                                                out.println("<tr>");
+                                                out.println("<td>" + rset.getString(1) + "</td>");
+                                                out.println("<td>" + rset.getString(2) + "</td>");
+                                                out.println("<td>" + rset.getString(3) + "</td>");
+                                                out.println("<td>" + c1 + "</td>");
+                                                out.println("<td>" + c2 + "</td>");
+                                                out.println("<td>" + c3 + "</td>");
+                                                out.println("</tr>");
+                                            } else {
+                                                if (c3 != 0) {
+                                                    out.println("<tr>");
+                                                    out.println("<td>" + rset.getString(1) + "</td>");
+                                                    out.println("<td>" + rset.getString(2) + "</td>");
+                                                    out.println("<td>" + rset.getString(3) + "</td>");
+                                                    out.println("<td>" + c1 + "</td>");
+                                                    out.println("<td>" + c2 + "</td>");
+                                                    out.println("<td>" + c3 + "</td>");
+                                                    out.println("</tr>");
+                                                }
                                             }
                                         }
                                     } catch (Exception e) {
@@ -253,7 +272,7 @@
 <script src="js/jquery.dataTables.js"></script>
 <script src="js/dataTables.bootstrap.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#tablaComp').dataTable();
-    });
+                                $(document).ready(function() {
+                                    $('#tablaComp').dataTable();
+                                });
 </script>

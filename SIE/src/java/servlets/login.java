@@ -47,7 +47,7 @@ public class login extends HttpServlet {
     private void lectorBD(Boolean estado, String aviso) {
         if (estado) {
             try {
-                String qry_cons = "select id_usuario, nombre from usuarios where nombre='" + this.nombre + "' and contra=password('" + this.pass + "')";
+                String qry_cons = "select id_usuario, nombre from usuarios where nombre='" + this.nombre + "' and contra=PASSWORD('" + this.pass + "')";
                 obj.conectar();
                 ResultSet consulta = null;
                 consulta = obj.consulta(qry_cons);

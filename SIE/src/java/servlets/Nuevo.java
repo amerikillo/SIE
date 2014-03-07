@@ -147,7 +147,7 @@ public class Nuevo extends HttpServlet {
                 request.getSession().setAttribute("clave", "");
                 request.getSession().setAttribute("descrip", "");
 
-                out.println("<script>alert('Compra correcta')</script>");
+                out.println("<script>alert('Compra realizada, datos transferidos correctamente')</script>");
             }
         } catch (Exception e) {
         }

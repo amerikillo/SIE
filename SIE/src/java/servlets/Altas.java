@@ -75,12 +75,12 @@ public class Altas extends HttpServlet {
             }
             if (request.getParameter("accion").equals("capturar")) {
                 ban1 = 1;
-                String cla_pro = "";
-                if (Float.parseFloat(request.getParameter("clave1")) < 1000) {
+                String cla_pro = request.getParameter("clave1");
+                /*if (Float.parseFloat(request.getParameter("clave1")) < 1000) {
                     cla_pro = "0" + request.getParameter("clave1");
                 } else {
                     cla_pro = request.getParameter("clave1");
-                }
+                }*/
                 String lot_pro = dameLote(cla_pro, request.getParameter("Lote"), request.getParameter("Caducidad"));
                 try {
                     int cajas = 0;
@@ -105,7 +105,11 @@ public class Altas extends HttpServlet {
                     con.conectar();
                     byte[] a = request.getParameter("observaciones").getBytes("ISO-8859-1");
                     String value = new String(a, "UTF-8");
-                    con.insertar("insert into datos_inv_cod values ('" + request.getParameter("cb") + "', '" + cla_pro + "', '" + lot_pro + "', '" + request.getParameter("descripci") + "', '" + request.getParameter("Caducidad") + "' ,'NUEVO', '" + cantidad + "', '" + request.getParameter("provee") + "', '" + sesion.getAttribute("nombre") + "', CURDATE(), 'BODEGA EDO DURANGO', '0', '" + cajas + "', '" + piezas + "', '" + resto + "', '" + request.getParameter("Marca") + "', '" + request.getParameter("pres") + "', '" + request.getParameter("origen") + "', '" + request.getParameter("coincide") + "', '" + request.getParameter("folio") + "', '" + request.getParameter("folio_remi") + "', '" + request.getParameter("orden") + "', '" + request.getParameter("FecFab") + "', '" + value + "') ");
+                    a = request.getParameter("pres").getBytes("ISO-8859-1");
+                    String pres= new String(a, "UTF-8");
+                    a = request.getParameter("Marca").getBytes("ISO-8859-1");
+                    String marca= new String(a, "UTF-8");
+                    con.insertar("insert into datos_inv_cod values ('" + request.getParameter("cb").toUpperCase() + "', '" + cla_pro.toUpperCase() + "', '" + lot_pro.toUpperCase() + "', '" + request.getParameter("descripci").toUpperCase() + "', '" + request.getParameter("Caducidad").toUpperCase() + "' ,'NUEVO', '" + cantidad + "', '" + request.getParameter("provee").toUpperCase() + "', '" + sesion.getAttribute("nombre") + "', CURDATE(), 'BODEGA EDO DURANGO', '0', '" + cajas + "', '" + piezas + "', '" + resto + "', '" + marca.toUpperCase() + "', '" + pres.toUpperCase() + "', '" + request.getParameter("origen") + "', '" + request.getParameter("coincide") + "', '" + request.getParameter("folio") + "', '" + request.getParameter("folio_remi") + "', '" + request.getParameter("orden") + "', '" + request.getParameter("FecFab") + "', '" + value.toUpperCase() + "') ");
                     con.cierraConexion();
                 } catch (Exception e) {
 
@@ -135,7 +139,7 @@ public class Altas extends HttpServlet {
         //String value = new String(utf8Bytes, "UTF-8"); 
         //out.println(value);
         if (ban1 == 0) {
-            out.println("<script>alert('Insumo Inexistente')</script>");
+            out.println("<script>alert('Clave Inexistente')</script>");
             out.println("<script>window.location='captura.jsp'</script>");
         } else {
             out.println("<script>window.location='captura.jsp'</script>");

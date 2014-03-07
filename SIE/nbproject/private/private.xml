@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/src/java/conn/ConectionDB_SQLServer.java</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/src/java/servlets/Proveedores.java</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/src/java/conn/ConectionDB.java</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/editar_proveedor.jsp</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/ejemploTablas.html</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/catalogo.jsp</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/reimpresion.jsp</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/js/jquery.dataTables.js</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/src/java/servlets/Nuevo.java</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/css/dataTables.bootstrap.css</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/web/js/dataTables.bootstrap.js</file>
-            <file>file:/C:/Users/Americo/Documents/GitHub/SIE/SIE/src/java/servlets/Altas.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

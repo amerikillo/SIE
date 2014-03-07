@@ -99,7 +99,6 @@
                                     <li class="divider"></li>
                                     <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
                                     <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
-<<<<<<< HEAD
                                     <li class="divider"></li>
                                     <li><a href="http://localhost:8088/Ubi">Ubicaciones</a></li>
                                     <li class="divider"></li>
@@ -107,11 +106,6 @@
                                 </ul>
                             </li>
                             <!--li class="dropdown">
-=======
-                                </ul>
-                            </li>
-                            <li class="dropdown">
->>>>>>> FETCH_HEAD
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">ADASU<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="captura.jsp">Captura de Insumos</a></li>
@@ -119,7 +113,6 @@
                                     <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
                                     <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
                                 </ul>
-<<<<<<< HEAD
                             </li-->
                             <%
                                 if (usua.equals("root")) {
@@ -133,9 +126,6 @@
                             </li>
                             <%                                }
                             %>
-=======
-                            </li>
->>>>>>> FETCH_HEAD
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
@@ -322,7 +312,7 @@
                                 </div>
                                 <label for="FecFab" class="col-sm-1 control-label">Fec Fab</label>
                                 <div class="col-sm-2">
-                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="LP_data();anade(this);return tabular(event, this)" />
+                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="LP_data();anade(this);return tabular(event, this)" maxlength="10" />
                                 </div>
                             </div>
                         </div>
@@ -330,19 +320,19 @@
                             <div class="form-group">
                                 <label for="Caducidad" class="col-sm-1 control-label">Cadu</label>
                                 <div class="col-sm-2">
-                                    <input data-date-format="dd/mm/yyyy" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="LP_data();anade(this);return tabular(event, this)" />
+                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="LP_data();anade(this);return tabular(event, this)" maxlength="10" />
                                 </div>
                                 <label for="Cajas" class="col-sm-1 control-label">Cajas</label>
                                 <div class="col-sm-1">
-                                    <input type="Cajas" class="form-control" id="Cajas" name="Cajas" placeholder="Cajas" onKeyPress="return justNumbers(event);" value="0" />
+                                    <input type="Cajas" class="form-control" id="Cajas" name="Cajas" placeholder="0" onKeyPress="return justNumbers(event);"  />
                                 </div>
                                 <label for="pzsxcaja" class="col-sm-2 control-label">Pzs x Caja</label>
                                 <div class="col-sm-2">
-                                    <input type="pzsxcaja" class="form-control" id="pzsxcaja" name="pzsxcaja" placeholder="Pzs x Caja" onKeyPress="return justNumbers(event);" value="0" />
+                                    <input type="pzsxcaja" class="form-control" id="pzsxcaja" name="pzsxcaja" placeholder="0" onKeyPress="return justNumbers(event);" />
                                 </div>
                                 <label for="Resto" class="col-sm-1 control-label">Resto</label>
                                 <div class="col-sm-1">
-                                    <input type="Resto" class="form-control" id="Resto" name="Resto" placeholder="Resto" onKeyPress="return justNumbers(event);" value="0" />
+                                    <input type="Resto" class="form-control" id="Resto" name="Resto" placeholder="0" onKeyPress="return justNumbers(event);"  />
                                 </div>
                             </div>
                         </div>
@@ -423,7 +413,7 @@
                                 <input type="text" value="<%=obser%>" name="observaciones" class="hidden" />
                                 <button  value="Guardar" name="accion" class="btn btn-warning btn-block" onclick="return confirm('Seguro que desea realizar la compra?');
                                         return validaCompra();">Confirmar Compra</button></form></td>
-                        <td colspan="2"><a href="Reporte.jsp" class="btn btn-success btn-block">Imprimir</a></td>
+                            <td colspan="2"><a href="Reporte.jsp" target="_blank" class="btn btn-success btn-block">Imprimir</a></td>
                     </tr>
                     <%
                         }
@@ -552,7 +542,7 @@
 
 
     function validaCapturaVacios() {
-        var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+        var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{4,4}$/;
         var folio_remi = document.formulario1.folio_remi.value;
         var orden = document.formulario1.orden.value;
         var provee = document.formulario1.provee.value;
@@ -566,7 +556,7 @@
         var pzsxcaja = document.formulario1.pzsxcaja.value;
         var Resto = document.formulario1.Resto.value;
         var Obser = document.formulario1.observaciones.value;
-        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Cajas === "" || pzsxcaja === "" || Resto === "" || Obser === "") {
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Obser === "") {
             alert("Tiene campos vacíos, verifique.");
             return false;
         }

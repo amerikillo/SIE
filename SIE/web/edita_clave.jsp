@@ -82,7 +82,6 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-<<<<<<< HEAD
                         <a class="navbar-brand" href="main_menu.jsp">Inicio</a>
                     </div>
                     <div class="navbar-collapse collapse">
@@ -121,16 +120,6 @@
                             </li>
                             <%                                }
                             %>
-=======
-                        <a class="navbar-brand" href="main_menu.jsp">Sistema de Ingreso de Entradas</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="captura.jsp">Captura de Insumos</a></li>
-                            <li><a href="catalogo.jsp">Catálogo de Proveedores</a></li>
-                            <li><a href="historial.jsp">Catalogo de Lotes</a></li>
-                            <li><a href="reimpresion.jsp">Reimpresión de Docs</a></li>
->>>>>>> FETCH_HEAD
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span> <%=usua%></a></li>
@@ -142,7 +131,7 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Captura de Insumo</h3>
+                    <h3 class="panel-title">Edición de Insumo</h3>
                 </div>
                 <form class="form-horizontal" role="form" name="formulario1" id="formulario1" method="post" action="Modificaciones">
                     <div class="panel-body">
@@ -306,7 +295,7 @@
                             <div class="form-group">
                                 <label for="Caducidad" class="col-sm-1 control-label">Cadu</label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="return tabular(event, this)" value="<%=cadu%>" />
+                                    <input type="text" readonly="readonly" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="return tabular(event, this)" value="<%=cadu%>" />
                                 </div>
                                 <label for="Cajas" class="col-sm-1 control-label">Cajas</label>
                                 <div class="col-sm-1">
