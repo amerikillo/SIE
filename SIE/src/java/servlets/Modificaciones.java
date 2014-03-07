@@ -84,7 +84,7 @@ public class Modificaciones extends HttpServlet {
                     String pres= new String(a, "UTF-8");
                     a = request.getParameter("Marca").getBytes("ISO-8859-1");
                     String marca= new String(a, "UTF-8");
-                    con.actualizar("update datos_inv_cod set cod_bar = '" + request.getParameter("cb").toUpperCase() + "', marca = '" + marca.toUpperCase() + "', um = '" + pres.toUpperCase() + "', lote = '" + request.getParameter("Lote").toUpperCase() + "', cadu = '" + request.getParameter("Caducidad").toUpperCase() + "', cajas= '" + cajas + "', piezas = '" + piezas + "', resto = '" + resto + "', cant='" + cantidad + "' where id_cap_inv = '" + request.getParameter("id") + "' ");
+                    con.actualizar("update datos_inv_cod set cod_bar = '" + request.getParameter("cb").toUpperCase() + "', marca = '" + marca.toUpperCase() + "', um = '" + pres.toUpperCase() + "', lote = '" + request.getParameter("Lote").toUpperCase() + "', cadu = '" + request.getParameter("Caducidad").toUpperCase() + "', cajas= '" + cajas + "', piezas = '" + piezas + "', resto = '" + resto + "', cant='" + cantidad + "', fec_fab='"+request.getParameter("FecFab").toUpperCase()+"' where id_cap_inv = '" + request.getParameter("id") + "' ");
                     con.cierraConexion();
                     out.println("<script>alert('Modificación Correcta')</script>");
                     out.println("<script>window.location='edita_clave.jsp'</script>");

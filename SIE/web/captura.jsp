@@ -77,7 +77,7 @@
         <title>SIE Sistema de Ingreso de Entradas</title>
     </head>
     <body onLoad="foco();">
-<div class="container">
+        <div class="container">
             <h1>SIALSS</h1>
             <h4>SISTEMA INTEGRAL DE ADMINISTRACIÓN Y LOGÍSTICA PARA SERVICIOS DE SALUD</h4>
             <div class="navbar navbar-default">
@@ -312,7 +312,9 @@
                                 </div>
                                 <label for="FecFab" class="col-sm-1 control-label">Fec Fab</label>
                                 <div class="col-sm-2">
-                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="LP_data();anade(this);return tabular(event, this)" maxlength="10" />
+                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="LP_data();
+                                            anade(this);
+                                            return tabular(event, this)" maxlength="10" />
                                 </div>
                             </div>
                         </div>
@@ -320,7 +322,9 @@
                             <div class="form-group">
                                 <label for="Caducidad" class="col-sm-1 control-label">Cadu</label>
                                 <div class="col-sm-2">
-                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="LP_data();anade(this);return tabular(event, this)" maxlength="10" />
+                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="Caducidad" name="Caducidad" placeholder="Caducidad" onKeyPress="LP_data();
+                                            anade(this);
+                                            return tabular(event, this)" maxlength="10" />
                                 </div>
                                 <label for="Cajas" class="col-sm-1 control-label">Cajas</label>
                                 <div class="col-sm-1">
@@ -413,7 +417,7 @@
                                 <input type="text" value="<%=obser%>" name="observaciones" class="hidden" />
                                 <button  value="Guardar" name="accion" class="btn btn-warning btn-block" onclick="return confirm('Seguro que desea realizar la compra?');
                                         return validaCompra();">Confirmar Compra</button></form></td>
-                            <td colspan="2"><a href="Reporte.jsp" target="_blank" class="btn btn-success btn-block">Imprimir</a></td>
+                        <td colspan="2"><a href="Reporte.jsp" target="_blank" class="btn btn-success btn-block">Imprimir</a></td>
                     </tr>
                     <%
                         }
@@ -552,6 +556,7 @@
         var descripci = document.formulario1.descripci.value;
         var cb = document.formulario1.cb.value;
         var Caducidad = document.formulario1.Caducidad.value;
+        var FecFab = document.formulario1.FecFab.value;
         var Cajas = document.formulario1.Cajas.value;
         var pzsxcaja = document.formulario1.pzsxcaja.value;
         var Resto = document.formulario1.Resto.value;
@@ -560,12 +565,31 @@
             alert("Tiene campos vacíos, verifique.");
             return false;
         }
+
+        var dtFechaActual = new Date();
+        var cadu = Caducidad.split('/');
+        var cad = cadu[2] + '-' + cadu[1] + "-" + cadu[0]
+
+        var fecfa = FecFab.split('/');
+        var fecf = fecfa[2] + '-' + fecfa[1] + "-" + fecfa[0]
+
+        if (Date.parse(dtFechaActual) > Date.parse(cad)) {
+            alert("La fecha de caducidad no puede ser menor a la fecha actual.");
+            return false;
+        }
+        if (Date.parse(dtFechaActual) < Date.parse(fecf)) {
+            alert("La fecha de fabricacion no puede ser mayor a la fecha actual.");
+            return false;
+        }
+
         if ((Caducidad.match(RegExPattern)) && (Caducidad != '')) {
-            return true;
         } else {
             alert("Caducidad Incorrecta, verifique.");
             return false;
         }
+
+        return true;
+
     }
 
 
@@ -610,7 +634,7 @@
     }
     function anade(esto) {
         if (esto.value.length > otro) {
-            if (esto.value.length == 2 ) {
+            if (esto.value.length == 2) {
                 esto.value += "/";
             }
         }

@@ -21,7 +21,7 @@
         response.sendRedirect("index.jsp");
     }
     ConectionDB con = new ConectionDB();
-    String folio_gnk = "", fecha = "", folio_remi = "", orden = "", provee = "", recib = "", entrega = "", origen = "", coincide = "", observaciones = "", clave = "", descrip = "", cod_bar = "", um = "", lote = "", cadu = "", cajas = "", piezas = "", resto = "", marca = "";
+    String folio_gnk = "", fecha = "", folio_remi = "", orden = "", provee = "", recib = "", entrega = "", origen = "", coincide = "", observaciones = "", clave = "", descrip = "", cod_bar = "", um = "", lote = "", cadu = "", cajas = "", piezas = "", resto = "", marca = "", fec_fab="";
     try {
         folio_gnk = (String) session.getAttribute("folio");
         fecha = (String) session.getAttribute("fecha");
@@ -51,6 +51,7 @@
             cajas = rset.getString("cajas");
             piezas = rset.getString("piezas");
             resto = rset.getString("resto");
+            fec_fab = rset.getString("fec_fab");
         }
         con.cierraConexion();
     } catch (Exception e) {
@@ -289,6 +290,12 @@
                                 <div class="col-sm-2">
                                     <input type="Lote" class="form-control" id="Lote" name="Lote" placeholder="Lote" onKeyPress="return tabular(event, this)" value="<%=lote%>" />
                                 </div>
+                                <label for="FecFab" class="col-sm-1 control-label">Fec Fab</label>
+                                <div class="col-sm-2">
+                                    <input data-date-format="dd/mm/yyyy" readonly="readonly" type="text" class="form-control" id="FecFab" name="FecFab" placeholder="FecFab" onKeyPress="LP_data();
+                                            anade(this);
+                                            return tabular(event, this)" maxlength="10" value="<%=fec_fab%>" />
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -343,7 +350,10 @@
                             $(function() {
                                 window.prettyPrint && prettyPrint();
                                 $("#Caducidad").datepicker();
-                                $("#Caducidad").datepicker('option', {dateFormat: 'dd/mm/yy'});
+                            });
+                             $(function() {
+                                window.prettyPrint && prettyPrint();
+                                $("#FecFab").datepicker();
                             });
 </script>
 <script>
@@ -450,6 +460,23 @@
             alert("Tiene campos vacíos, verifique.");
             return false;
         }
+        
+        var dtFechaActual = new Date();
+        var cadu = Caducidad.split('/');
+        var cad = cadu[2] + '-' + cadu[1] + "-" + cadu[0]
+
+        var fecfa = FecFab.split('/');
+        var fecf = fecfa[2] + '-' + fecfa[1] + "-" + fecfa[0]
+
+        if (Date.parse(dtFechaActual) > Date.parse(cad)) {
+            alert("La fecha de caducidad no puede ser menor a la fecha actual.");
+            return false;
+        }
+        if (Date.parse(dtFechaActual) < Date.parse(fecf)) {
+            alert("La fecha de fabricacion no puede ser mayor a la fecha actual.");
+            return false;
+        }
+        
         if ((Caducidad.match(RegExPattern)) && (Caducidad != '')) {
             return true;
         } else {
