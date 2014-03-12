@@ -104,37 +104,49 @@ public class Proveedores extends HttpServlet {
              *Guarda Registros
              */
             if (request.getParameter("accion").equals("guardar")) {
-                consql.conectar();
-                con.conectar();
                 try {
-                    String clave = "";
-                    ResultSet rset = con.consulta("select MAX(F_ClaPrv) from provee_all");
-                    while (rset.next()) {
-                        clave = "" + ((Integer.parseInt(rset.getString(1).trim())) + 1);
-                    }
+                    consql.conectar();
+                    con.conectar();
                     try {
-                        int largoClave = clave.length();
-                        int espacios = 5 - largoClave;
-                        for (int i = 1; i <= espacios; i++) {
-                            clave = " " + clave;
+                        String clave = "";
+                        ResultSet rset = con.consulta("select MAX(F_ClaPrv) from provee_all");
+                        while (rset.next()) {
+                            try {
+                                clave = "" + ((Integer.parseInt(rset.getString(1).trim())) + 1);
+                            } catch (Exception e) {
+                            }
                         }
-                    } catch (Exception e) {
+                        System.out.println("***" + clave + "---");
+                        if (clave.equals("")) {
+                            clave = "1";
+                        }
+                        try {
+                            int largoClave = clave.length();
+                            int espacios = 5 - largoClave;
+                            for (int i = 1; i <= espacios; i++) {
+                                clave = " " + clave;
+                            }
+                        } catch (Exception e) {
+                        }
+                        consql.insertar("insert into TB_Provee values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
+
+                        con.insertar("insert into provee_all values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
+
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+
+                        out.println("<script>alert('Ya esta registrado ese proveedor')</script>");
+                        out.println("<script>window.location='catalogo.jsp'</script>");
                     }
-                    consql.insertar("insert into TB_Provee values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
+                    con.cierraConexion();
+                    consql.cierraConexion();
 
-                    con.insertar("insert into provee_all values ('" + clave + "', '" + request.getParameter("Nombre").toUpperCase() + "', '" + request.getParameter("Direccion").toUpperCase() + "', '" + request.getParameter("Colonia").toUpperCase() + "', '" + request.getParameter("Poblacion").toUpperCase() + "', '" + request.getParameter("CP").toUpperCase() + "', '" + request.getParameter("RFC").toUpperCase() + "', '" + request.getParameter("CON").toUpperCase() + "', '" + request.getParameter("CLS").toUpperCase() + "', '" + request.getParameter("Telefono").toUpperCase() + "', '" + request.getParameter("FAX").toUpperCase() + "', '" + request.getParameter("Mail").toUpperCase() + "', '" + request.getParameter("Observaciones").toUpperCase() + "');");
-
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-
-                    out.println("<script>alert('Ya esta registrado ese proveedor')</script>");
+                    out.println("<script>alert('Proveedor capturado correctamente.')</script>");
                     out.println("<script>window.location='catalogo.jsp'</script>");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
-                con.cierraConexion();
-                consql.cierraConexion();
 
-                out.println("<script>alert('Proveedor capturado correctamente.')</script>");
-                out.println("<script>window.location='catalogo.jsp'</script>");
             }
         } catch (SQLException e) {
 
