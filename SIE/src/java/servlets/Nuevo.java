@@ -225,7 +225,7 @@ public class Nuevo extends HttpServlet {
         try {
             consql.conectar();
             try {
-                consql.insertar("insert into TB_MovInv values (CURDATE(), '" + cladoc + "', '" + codprov + "', '1', '" + clapro + "', '" + cant + "', '" + costo + "', '" + costo + "', '" + cantcosto + "', '', '" + idLote + "', '" + dameidMov() + "', 'M', '" + observaciones + "') ");
+                consql.insertar("insert into TB_MovInv values (GETDATE(), '" + cladoc + "', '" + codprov + "', '1', '" + clapro + "', '" + cant + "', '" + costo + "', '" + costo + "', '" + cantcosto + "', '', '" + idLote + "', '" + dameidMov() + "', 'M', '" + observaciones + "') ");
             } catch (Exception e) {
             }
             consql.cierraConexion();
