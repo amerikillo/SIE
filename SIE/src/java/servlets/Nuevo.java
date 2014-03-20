@@ -123,7 +123,7 @@ public class Nuevo extends HttpServlet {
                                 consql.conectar();
                                 consql.insertar("insert into TB_Compra values ('C', '" + dame7car(Cla_Doc) + "', '" + Cla_Prv + "', 'A',  '  000', '" + df2.format(df.parse(rsetm.getString("date"))) + " 00:00:00', NULL, '" + rsetm.getString("clave") + "', '', NULL, '1', '" + rsetm.getString("cant") + "', '0', '" + PreCant + "', '0', '" + PreCant + "', '" + PreCant + "', '0', '" + Impuesto + "', '" + CompraTotal + "', '" + Precio + "', '" + idLote + "', 'D', '" + df2.format(df.parse(rsetm.getString("date"))) + " 00:00:00', '" + sesion.getAttribute("nombre") + "', '" + idObser + "', '" + idObser + "', '', '" + rsetm.getString("folio_remi") + "') ");
                                 consql.conectar();
-                                insertaMovimiento(Cla_Doc, rsetm.getString("clave"), rsetm.getString("cant"), Precio, CompraTotal, idLote, rsetm.getString("observaciones"), Cla_Prv);
+                                insertaMovimiento(Cla_Doc, rsetm.getString("clave"), rsetm.getString("cant"), Precio, CompraTotal, idLote, idObser, Cla_Prv);
                                 consql.conectar();
                                 insertaCompraBitacora(sesion.getAttribute("nombre").toString(), "COMPRA-MANUAL", "REGISTRAR", Cla_Doc, "1", "COMPRAS");
                                 consql.cierraConexion();
@@ -226,7 +226,7 @@ public class Nuevo extends HttpServlet {
         try {
             consql.conectar();
             try {
-                consql.insertar("insert into TB_MovInv values (GETDATE(), '" + cladoc + "', '" + codprov + "', '1', '" + clapro + "', '" + cant + "', '" + costo + "', '" + costo + "', '" + cantcosto + "', '', '" + idLote + "', '" + dameidMov() + "', 'M', '" + observaciones + "') ");
+                consql.insertar("insert into TB_MovInv values (GETDATE(), '" + dame7car(cladoc) + "', '" + codprov + "', '1', '" + clapro + "', '" + cant + "', '" + costo + "', '" + costo + "', '" + cantcosto + "', '1', '" + idLote + "', '" + dameidMov() + "', 'M', '" + observaciones + "') ");
             } catch (Exception e) {
             }
             consql.cierraConexion();
