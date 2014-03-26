@@ -18,7 +18,7 @@
     if (sesion.getAttribute("nombre") != null) {
         usua = (String) sesion.getAttribute("nombre");
     } else {
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("../index.jsp");
     }
     ConectionDB con = new ConectionDB();
 %>

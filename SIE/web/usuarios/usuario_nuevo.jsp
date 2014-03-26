@@ -18,7 +18,7 @@
     if (sesion.getAttribute("nombre") != null) {
         usua = (String) sesion.getAttribute("nombre");
     } else {
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("../index.jsp");
     }
     ConectionDB con = new ConectionDB();
 %>
@@ -114,6 +114,17 @@
                         <label for="Pass2" class="col-sm-1 control-label">Confirmar Contraseña</label>
                         <div class="col-sm-2">
                             <input type="password" class="form-control" id="Pass2" name="Pass2" placeholder="Contraseña" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Pass" class="col-sm-2 control-label">Rol</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="Rol" name="Rol" > 
+                                <option value="1">Consultor</option>
+                                <option value="2">Reubicador</option>
+                                <option value="3">Administrador de Almacén</option>
+                                <option value="4">Super Usuario</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">

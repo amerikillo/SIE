@@ -43,7 +43,7 @@ public class Usuarios extends HttpServlet {
                 try {
                     con.conectar();
                     try {
-                        con.insertar("insert into usuarios values('0', '" + request.getParameter("Nombre") + "', '" + request.getParameter("Apellido") + "', PASSWORD('" + request.getParameter("Pass") + "'))");
+                        con.insertar("insert into usuarios values('0', '" + request.getParameter("Nombre") + "', '" + request.getParameter("Apellido") + "', PASSWORD('" + request.getParameter("Pass") + "'), '" + request.getParameter("Rol") + "')");
                     } catch (Exception e) {
                     }
                     con.cierraConexion();
