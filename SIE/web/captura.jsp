@@ -225,7 +225,7 @@
                                 <%
                                     }
                                 %>
-                                <label for="coincide" class="col-sm-4 control-label">Coincide el Documento con la Remisión</label>
+                                <label for="coincide" class="col-sm-4 control-label">¿Coincide el Documento con la Remisión?</label>
                                 <%
                                     if (coincide.equals("")) {
                                 %>
@@ -512,7 +512,9 @@
         document.formulario1.origen.value = origen;
     }
 </script>
-<script languaje="Javascript"> // este script hace que tabule el enter !!!
+<script> // este script hace que tabule el enter !!!
+    
+    
     function tabular(e, obj)
     {
         tecla = (document.all) ? e.keyCode : e.which;
@@ -567,6 +569,8 @@
         }
 
         var dtFechaActual = new Date();
+        var sumarDias=parseInt(93);
+        dtFechaActual.setDate(dtFechaActual.getDate()+sumarDias);
         var cadu = Caducidad.split('/');
         var cad = cadu[2] + '-' + cadu[1] + "-" + cadu[0]
 
@@ -574,7 +578,7 @@
         var fecf = fecfa[2] + '-' + fecfa[1] + "-" + fecfa[0]
 
         if (Date.parse(dtFechaActual) > Date.parse(cad)) {
-            alert("La fecha de caducidad no puede ser menor a la fecha actual.");
+            alert("La fecha de caducidad no puede ser menor a tres meses próximos");
             return false;
         }
         if (Date.parse(dtFechaActual) < Date.parse(fecf)) {

@@ -80,7 +80,7 @@ public class Modificaciones extends HttpServlet {
                 int cantidad = (cajas * piezas) + resto;
                 try {
                     con.conectar();
-                    byte[] a = request.getParameter("observaciones").getBytes("ISO-8859-1");
+                    byte[] a = request.getParameter("pres").getBytes("ISO-8859-1");
                     String pres= new String(a, "UTF-8");
                     a = request.getParameter("Marca").getBytes("ISO-8859-1");
                     String marca= new String(a, "UTF-8");

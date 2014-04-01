@@ -70,7 +70,7 @@ public class Proveedores extends HttpServlet {
                 consql.cierraConexion();
 
                 out.println("<script>alert('Proveedor actualizado correctamente.')</script>");
-                out.println("<script>window.location='editar_proveedor.jsp'</script>");
+                out.println("<script>window.location='catalogo.jsp'</script>");
             }
             /*
              *Manda al jsp el id del registro a editar

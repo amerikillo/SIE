@@ -42,7 +42,7 @@ public class ConectionDB_SQLServer {
     public ConectionDB_SQLServer() {
         //poner los datos apropiados
         this.usuario = "sa";
-        this.clave = "GnKl\"=!#";
+        this.clave = "123456";
         this.url = "jdbc:sqlserver://127.0.0.1\\sqlserver:1433;databaseName=gnk_durango2014;";
         this.driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 

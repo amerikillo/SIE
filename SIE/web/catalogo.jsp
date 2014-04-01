@@ -107,44 +107,46 @@
                                 </div-->
                                 <label for="Nombre" class="col-xs-2 control-label">Nombre*</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Nombre" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Nombre" name="Nombre" maxlength="60" placeholder="Nombre" onKeyPress="return tabular(event, this)" />
                                 </div>
-                                <label for="Telefono" class="col-xs-1 control-label">Telefono* </label>
+                                <label for="Telefono" class="col-xs-1 control-label">Teléfono* </label>
                                 <div class="col-xs-2">
                                     <input name="Telefono" type="text" class="form-control" id="Telefono" placeholder="Telefono" onKeyPress="LP_data();
                                             anade(this);
-                                            return tabular(event, this)" maxlength="14" /><h6>(XXX) XXX-XXXX</h6></div>
-
+                                            return isNumberKey(event, this);" maxlength="14" /><h6>(XXX) XXX-XXXX</h6></div>
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-2"><a class="btn btn-block btn-danger" onclick="window.close();">Salir</a></div>
                             </div>
+
                         </div>
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="Direccion" class="col-xs-2 control-label">Dirección</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="Direccion" name="Direccion" placeholder="Direccion" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Direccion" maxlength="50" name="Direccion" placeholder="Direccion" onKeyPress="return tabular(event, this)" />
                                 </div>
                                 <label for="Colonia" class="col-xs-1 control-label">Colonia</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="Colonia" name="Colonia" placeholder="Colonia" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Colonia" name="Colonia" maxlength="40" placeholder="Colonia" onKeyPress="return tabular(event, this)" />
                                 </div>
                                 <label for="Poblacion" class="col-xs-1 control-label">Población</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="Poblacion" name="Poblacion" placeholder="Poblacion" onKeyPress="return tabular(event, this)"  >
+                                    <input type="text" class="form-control" id="Poblacion" name="Poblacion" maxlength="40" placeholder="Poblacion" onKeyPress="return tabular(event, this)"  >
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <label for="CP" class="col-xs-2 control-label">C.P.</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="CP" name="CP" placeholder="CP" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="CP" name="CP" placeholder="CP" maxlength="5" onKeyPress="return isNumberKey(event, this);" />
                                 </div>
                                 <label for="RFC" class="col-xs-1 control-label">RFC</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="RFC" name="RFC" placeholder="RFC" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="RFC" name="RFC" maxlength="15" placeholder="RFC" onKeyPress="return tabular(event, this)" />
                                 </div>
                                 <label for="CON" class="col-xs-1 control-label">Contacto</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="CON" name="CON" placeholder="CON" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="CON" name="CON" maxlength="50" placeholder="CON" onKeyPress="return tabular(event, this)" />
                                 </div>
                             </div>
                         </div>
@@ -152,16 +154,18 @@
                             <div class="form-group">
                                 <label for="CLS" class="col-xs-2 control-label">Clasificación</label>
                                 <div class="col-xs-2">
-                                    <input type="CLS" class="form-control" id="CLS" name="CLS" placeholder="CLS" onKeyPress="return tabular(event, this)"  >
+                                    <input type="CLS" class="form-control" id="CLS" name="CLS" placeholder="CLS" maxlength="5" onKeyPress="return tabular(event, this)"  >
                                 </div>
 
                                 <label for="FAX" class="col-xs-1 control-label">FAX</label>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="FAX" name="FAX" placeholder="FAX" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="FAX" name="FAX" placeholder="FAX" maxlength="14" onKeyPress="LP_data();
+                                            anade(this);
+                                            return isNumberKey(event, this);" />
                                 </div>
                                 <label for="Mail" class="col-xs-1 control-label">Mail</label>
                                 <div class="col-xs-2">
-                                    <input type="text" class="form-control" id="Mail" name="Mail" placeholder="Mail" onKeyPress="return tabular(event, this)" />
+                                    <input type="text" class="form-control" id="Mail" name="Mail" placeholder="Mail" maxlength="60" onKeyPress="return tabular(event, this)" />
                                 </div>
                             </div>
                         </div>
@@ -254,22 +258,59 @@
 <script src="js/jquery.dataTables.js"></script>
 <script src="js/dataTables.bootstrap.js"></script>
 <script>
-                                                    $(document).ready(function() {
-                                                        $('#datosProv').dataTable();
-                                                    });
+                                                        $(document).ready(function() {
+                                                            $('#datosProv').dataTable();
+                                                        });
 </script>
 <script>
+
+
+    function isNumberKey(evt, obj)
+    {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode === 13 || charCode > 31 && (charCode < 48 || charCode > 57)) {
+            if (charCode === 13) {
+                frm = obj.form;
+                for (i = 0; i < frm.elements.length; i++)
+                    if (frm.elements[i] === obj)
+                    {
+                        if (i === frm.elements.length - 1)
+                            i = -1;
+                        break
+                    }
+                /*ACA ESTA EL CAMBIO*/
+                if (frm.elements[i + 1].disabled === true)
+                    tabular(e, frm.elements[i + 1]);
+                else
+                    frm.elements[i + 1].focus();
+                return false;
+            }
+            return false;
+        }
+        return true;
+
+    }
+
+
     function valida_alta() {
-        var Clave = document.formulario1.Clave.value;
+        /*var Clave = document.formulario1.Clave.value;*/
         var Nombre = document.formulario1.Nombre.value;
         var Telefono = document.formulario1.Telefono.value;
-        if (Clave === "" || Nombre === "" || Telefono === "") {
+        if (Nombre === "" || Telefono === "") {
             alert("Tiene campos vacíos, verifique.");
             return false;
         }
     }
 </script>
 <script language="javascript">
+    function justNumbers(e)
+    {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        if ((keynum == 8) || (keynum == 46))
+            return true;
+
+        return /\d/.test(String.fromCharCode(keynum));
+    }
     otro = 0;
     function LP_data() {
         var key = window.event.keyCode;//codigo de tecla. 
@@ -299,6 +340,28 @@
             }
         }
         otro = esto.value.length
+    }
+
+
+    function tabular(e, obj)
+    {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla != 13)
+            return;
+        frm = obj.form;
+        for (i = 0; i < frm.elements.length; i++)
+            if (frm.elements[i] == obj)
+            {
+                if (i == frm.elements.length - 1)
+                    i = -1;
+                break
+            }
+        /*ACA ESTA EL CAMBIO*/
+        if (frm.elements[i + 1].disabled == true)
+            tabular(e, frm.elements[i + 1]);
+        else
+            frm.elements[i + 1].focus();
+        return false;
     }
 
 </script> 
