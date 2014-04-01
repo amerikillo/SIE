@@ -87,7 +87,7 @@ public class Modificaciones extends HttpServlet {
                     con.actualizar("update datos_inv_cod set cod_bar = '" + request.getParameter("cb").toUpperCase() + "', marca = '" + marca.toUpperCase() + "', um = '" + pres.toUpperCase() + "', lote = '" + request.getParameter("Lote").toUpperCase() + "', cadu = '" + request.getParameter("Caducidad").toUpperCase() + "', cajas= '" + cajas + "', piezas = '" + piezas + "', resto = '" + resto + "', cant='" + cantidad + "', fec_fab='" + request.getParameter("FecFab").toUpperCase() + "' where id_cap_inv = '" + request.getParameter("id") + "' ");
                     con.cierraConexion();
                     out.println("<script>alert('Modificación Correcta')</script>");
-                    out.println("<script>window.location='edita_clave.jsp'</script>");
+                    out.println("<script>window.location='captura.jsp'</script>");
                 } catch (Exception e) {
                     out.println("<script>alert('Modificación incorrecta!!')</script>");
                     out.println("<script>window.location='edita_clave.jsp'</script>");
