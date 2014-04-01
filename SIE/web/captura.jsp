@@ -610,12 +610,13 @@
             return false;
         }
 
-        if (total === 0) {
+         if (parseInt(total) === 0) {
             alert("El total de piezas no puede ser \'0\' ");
             return false;
         }
 
         var dtFechaActual = new Date();
+        var dtFechaActualFB = new Date();
         var sumarDias = parseInt(93);
         dtFechaActual.setDate(dtFechaActual.getDate() + sumarDias);
         var cadu = Caducidad.split('/');
@@ -628,7 +629,7 @@
             alert("La fecha de caducidad no puede ser menor a tres meses próximos");
             return false;
         }
-        if (Date.parse(dtFechaActual) < Date.parse(fecf)) {
+        if (Date.parse(dtFechaActualFB) < Date.parse(fecf)) {
             alert("La fecha de fabricacion no puede ser mayor a la fecha actual.");
             return false;
         }

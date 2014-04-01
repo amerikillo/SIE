@@ -345,16 +345,15 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery-ui-1.10.3.custom.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
-
 <script>
-                            $(function() {
-                                window.prettyPrint && prettyPrint();
-                                $("#Caducidad").datepicker();
-                            });
-                             $(function() {
-                                window.prettyPrint && prettyPrint();
-                                $("#FecFab").datepicker();
-                            });
+                                    $(function() {
+                                        $("#Caducidad").datepicker();
+                                        $("#Caducidad").datepicker('option', {dateFormat: 'dd/mm/yy'});
+                                    });
+                                    $(function() {
+                                        $("#FecFab").datepicker();
+                                        $("#FecFab").datepicker('option', {dateFormat: 'dd/mm/yy'});
+                                    });
 </script>
 <script>
     $(function() {
@@ -403,14 +402,16 @@
     }
     function proveedor() {
         var proveedor = document.formulario1.list_provee.value;
-        document.formulario1.prov.value = proveedor;
+        document.formulario1.provee.value = proveedor;
     }
     function orig() {
         var origen = document.formulario1.ori.value;
         document.formulario1.origen.value = origen;
     }
 </script>
-<script languaje="Javascript"> // este script hace que tabule el enter !!!
+<script> // este script hace que tabule el enter !!!
+
+
     function tabular(e, obj)
     {
         tecla = (document.all) ? e.keyCode : e.which;
@@ -442,26 +443,79 @@
         }
     }
 
+
     function validaCapturaVacios() {
-        var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+        var mensaje = "\n";
+        var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{4,4}$/;
         var folio_remi = document.formulario1.folio_remi.value;
+        if (folio_remi === "")
+            mensaje = mensaje + "Folio de Remisión vacío \n";
         var orden = document.formulario1.orden.value;
+        if (orden === "")
+            mensaje = mensaje + "Orden de compra vacía \n";
         var provee = document.formulario1.provee.value;
+        if (provee === "")
+            mensaje = mensaje + "Proveedor vacío \n";
         var recib = document.formulario1.recib.value;
+        if (recib === "")
+            mensaje = mensaje + "Recibe vacío \n";
         var entrega = document.formulario1.entrega.value;
+        if (entrega === "")
+            mensaje = mensaje + "Entrega vacío \n";
         var clave1 = document.formulario1.clave1.value;
+        if (clave1 === "")
+            mensaje = mensaje + "Clave de producto vacía \n";
         var descripci = document.formulario1.descripci.value;
+        if (descripci === "")
+            mensaje = mensaje + "Descripción vacía \n";
         var cb = document.formulario1.cb.value;
+        if (cb === "")
+            mensaje = mensaje + "Código de Barras vacío \n";
         var Caducidad = document.formulario1.Caducidad.value;
+        if (Caducidad === "")
+            mensaje = mensaje + "Caducidad vacía \n";
+        var FecFab = document.formulario1.FecFab.value;
+        if (FecFab === "")
+            mensaje = mensaje + "Fecha de elaboración vacía \n";
+        var Marca = document.formulario1.Marca.value;
+        if (Marca === "")
+            mensaje = mensaje + "Campo de Marca vacío \n";
+        var pres = document.formulario1.pres.value;
+        if (pres === "")
+            mensaje = mensaje + "Campo Presentación vacío \n";
+        var Lote = document.formulario1.Lote.value;
+        if (Lote === "")
+            mensaje = mensaje + "Campo Lote vacío \n";
+        var Obser = document.formulario1.observaciones.value;
+        if (Obser === "")
+            mensaje = mensaje + "Campo de observaciones vacío \n";
+
+
         var Cajas = document.formulario1.Cajas.value;
+        if (Cajas === "")
+            Cajas = parseInt(0);
         var pzsxcaja = document.formulario1.pzsxcaja.value;
+        if (pzsxcaja === "")
+            pzsxcaja = parseInt(0);
         var Resto = document.formulario1.Resto.value;
-        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Cajas === "" || pzsxcaja === "" || Resto === "") {
-            alert("Tiene campos vacíos, verifique.");
+        if (Resto === "")
+            Resto = parseInt(0);
+        var total = (Cajas * pzsxcaja) + Resto;
+
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Obser === "" || Marca === "" || pres === "" || Lote === "") {
+            alert("Tiene campos vacíos, verifique." + mensaje + "");
             return false;
         }
-        
+
+        if (parseInt(total) === 0) {
+            alert("El total de piezas no puede ser \'0\' ");
+            return false;
+        }
+
         var dtFechaActual = new Date();
+        var dtFechaActualFB = new Date();
+        var sumarDias = parseInt(93);
+        dtFechaActual.setDate(dtFechaActual.getDate() + sumarDias);
         var cadu = Caducidad.split('/');
         var cad = cadu[2] + '-' + cadu[1] + "-" + cadu[0]
 
@@ -469,20 +523,38 @@
         var fecf = fecfa[2] + '-' + fecfa[1] + "-" + fecfa[0]
 
         if (Date.parse(dtFechaActual) > Date.parse(cad)) {
-            alert("La fecha de caducidad no puede ser menor a la fecha actual.");
+            alert("La fecha de caducidad no puede ser menor a tres meses próximos");
             return false;
         }
-        if (Date.parse(dtFechaActual) < Date.parse(fecf)) {
+        if (Date.parse(dtFechaActualFB) < Date.parse(fecf)) {
             alert("La fecha de fabricacion no puede ser mayor a la fecha actual.");
             return false;
         }
-        
+
         if ((Caducidad.match(RegExPattern)) && (Caducidad != '')) {
-            return true;
         } else {
             alert("Caducidad Incorrecta, verifique.");
             return false;
         }
+
+        return true;
+
+    }
+
+
+    function validaCompra() {
+        var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+        var folio_remi = document.formulario1.folio_remi.value;
+        var orden = document.formulario1.orden.value;
+        var provee = document.formulario1.provee.value;
+        var recib = document.formulario1.recib.value;
+        var entrega = document.formulario1.entrega.value;
+        var Obser = document.formulario1.observaciones.value;
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || Obser === "") {
+            alert("Tiene campos vacíos, verifique.");
+            return false;
+        }
+        return true;
     }
 </script>
 <script type="text/javascript">
@@ -491,6 +563,36 @@
         var keynum = window.event ? window.event.keyCode : e.which;
         if ((keynum == 8) || (keynum == 46))
             return true;
+
         return /\d/.test(String.fromCharCode(keynum));
     }
 </script>
+
+<script language="javascript">
+    otro = 0;
+    function LP_data() {
+        var key = window.event.keyCode;//codigo de tecla. 
+        if (key < 48 || key > 57) {//si no es numero 
+            window.event.keyCode = 0;//anula la entrada de texto. 
+        }
+    }
+    function anade(esto) {
+        if (esto.value.length > otro) {
+            if (esto.value.length == 2) {
+                esto.value += "/";
+            }
+        }
+        if (esto.value.length > otro) {
+            if (esto.value.length == 5) {
+                esto.value += "/";
+            }
+        }
+        if (esto.value.length < otro) {
+            if (esto.value.length == 2 || esto.value.length == 5) {
+                esto.value = esto.value.substring(0, esto.value.length - 1);
+            }
+        }
+        otro = esto.value.length
+    }
+
+</script> 
