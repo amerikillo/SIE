@@ -513,8 +513,8 @@
     }
 </script>
 <script> // este script hace que tabule el enter !!!
-    
-    
+
+
     function tabular(e, obj)
     {
         tecla = (document.all) ? e.keyCode : e.which;
@@ -548,29 +548,58 @@
 
 
     function validaCapturaVacios() {
+        var mensaje = "\n";
         var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{4,4}$/;
         var folio_remi = document.formulario1.folio_remi.value;
+        if (folio_remi === "")
+            mensaje = mensaje + "Folio de Remisión vacío \n";
         var orden = document.formulario1.orden.value;
+        if (orden === "")
+            mensaje = mensaje + "Orden de compra vacía \n";
         var provee = document.formulario1.provee.value;
+        if (provee === "")
+            mensaje = mensaje + "Proveedor vacío \n";
         var recib = document.formulario1.recib.value;
+        if (recib === "")
+            mensaje = mensaje + "Recibe vacío \n";
         var entrega = document.formulario1.entrega.value;
+        if (entrega === "")
+            mensaje = mensaje + "Entrega vacío \n";
         var clave1 = document.formulario1.clave1.value;
+        if (clave1 === "")
+            mensaje = mensaje + "Clave de producto vacía \n";
         var descripci = document.formulario1.descripci.value;
+        if (descripci === "")
+            mensaje = mensaje + "Descripción vacía \n";
         var cb = document.formulario1.cb.value;
+        if (cb === "")
+            mensaje = mensaje + "Código de Barras vacío \n";
         var Caducidad = document.formulario1.Caducidad.value;
+        if (Caducidad === "")
+            mensaje = mensaje + "Caducidad vacía \n";
         var FecFab = document.formulario1.FecFab.value;
-        var Cajas = document.formulario1.Cajas.value;
-        var pzsxcaja = document.formulario1.pzsxcaja.value;
-        var Resto = document.formulario1.Resto.value;
+        if (FecFab === "")
+            mensaje = mensaje + "Fecha de elaboración vacía \n";
+        var Marca = document.formulario1.Marca.value;
+        if (Marca === "")
+            mensaje = mensaje + "Campo de Marca vacío \n";
+        var pres = document.formulario1.pres.value;
+        if (pres === "")
+            mensaje = mensaje + "Campo Presentación vacío \n";
+        var Lote = document.formulario1.Lote.value;
+        if (Lote === "")
+            mensaje = mensaje + "Campo Lote vacío \n";
         var Obser = document.formulario1.observaciones.value;
-        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Obser === "") {
-            alert("Tiene campos vacíos, verifique.");
+        if (Obser === "")
+            mensaje = mensaje + "Campo de observaciones vacío \n";
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Obser === "" || Marca === "" || pres === "" || Lote === "") {
+            alert("Tiene campos vacíos, verifique." + mensaje + "");
             return false;
         }
 
         var dtFechaActual = new Date();
-        var sumarDias=parseInt(93);
-        dtFechaActual.setDate(dtFechaActual.getDate()+sumarDias);
+        var sumarDias = parseInt(93);
+        dtFechaActual.setDate(dtFechaActual.getDate() + sumarDias);
         var cadu = Caducidad.split('/');
         var cad = cadu[2] + '-' + cadu[1] + "-" + cadu[0]
 
@@ -605,16 +634,11 @@
         var recib = document.formulario1.recib.value;
         var entrega = document.formulario1.entrega.value;
         var Obser = document.formulario1.observaciones.value;
-        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Cajas === "" || pzsxcaja === "" || Resto === "" || Obser === "") {
+        if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || Obser === "") {
             alert("Tiene campos vacíos, verifique.");
             return false;
         }
-        if ((Caducidad.match(RegExPattern)) && (Caducidad != '')) {
-            return true;
-        } else {
-            alert("Caducidad Incorrecta, verifique.");
-            return false;
-        }
+        return true;
     }
 </script>
 <script type="text/javascript">

@@ -239,7 +239,7 @@
                                         }
 </script>
 <script language="javascript">
-    
+
     function isNumberKey(evt, obj)
     {
         var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -265,8 +265,8 @@
         return true;
 
     }
-    
-    
+
+
     otro = 0;
     function LP_data() {
         var key = window.event.keyCode;//codigo de tecla. 
@@ -297,8 +297,8 @@
         }
         otro = esto.value.length
     }
-    
-    
+
+
     function tabular(e, obj)
     {
         tecla = (document.all) ? e.keyCode : e.which;
