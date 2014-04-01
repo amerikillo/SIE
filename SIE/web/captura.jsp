@@ -592,8 +592,25 @@
         var Obser = document.formulario1.observaciones.value;
         if (Obser === "")
             mensaje = mensaje + "Campo de observaciones vacío \n";
+
+
+        var Cajas = document.formulario1.Cajas.value;
+        if (Cajas === "")
+            Cajas = parseInt(0);
+        var pzsxcaja = document.formulario1.pzsxcaja.value;
+        pzsxcaja = parseInt(0);
+        var Resto = document.formulario1.Resto.value;
+        Resto = parseInt(0);
+
+        var total = (Cajas * pzsxcaja) + Resto;
+
         if (folio_remi === "" || orden === "" || provee === "" || recib === "" || entrega === "" || clave1 === "" || descripci === "" || cb === "" || Caducidad === "" || Obser === "" || Marca === "" || pres === "" || Lote === "") {
             alert("Tiene campos vacíos, verifique." + mensaje + "");
+            return false;
+        }
+        
+        if(total===0){
+            alert("El total de piezas no puede ser \'0\' ");
             return false;
         }
 
