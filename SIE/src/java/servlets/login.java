@@ -34,6 +34,8 @@ public class login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     ConectionDB obj = new ConectionDB();
+    ConectionDB con = new ConectionDB();
+    ConectionDB_SQLServer consql = new ConectionDB_SQLServer();
     private String nombre, pass, //En pass se guarda la que ingreso el usuario
             AttNombre = "", AttAppe = "",
             SQLEx = "", EX = "", otra_var = "",
@@ -76,7 +78,6 @@ public class login extends HttpServlet {
             }
         }
     }
-
 
     private void validar(String parNom, String parPass) {
 
@@ -129,7 +130,7 @@ public class login extends HttpServlet {
                     } catch (SQLException ex) {
                         Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    proveedores();
                     response.sendRedirect(response.encodeRedirectURL("main_menu.jsp"));
                 } else {
                     try {
@@ -206,4 +207,22 @@ public class login extends HttpServlet {
         }
 
     }// end of doGet
+
+    public void proveedores() {
+        try {
+            consql.conectar();
+            con.conectar();
+            try {
+                con.insertar("truncate table provee_all");
+                ResultSet rset = consql.consulta("select * from TB_Provee;");
+                while (rset.next()) {
+                    con.insertar("insert into provee_all values ('" + rset.getString(1) + "', '" + rset.getString(2) + "', '" + rset.getString(3) + "', '" + rset.getString(4) + "', '" + rset.getString(5) + "', '" + rset.getString(6) + "', '" + rset.getString(7) + "', '" + rset.getString(8) + "' ,'" + rset.getString(9) + "', '" + rset.getString(10) + "', '" + rset.getString(11) + "', '" + rset.getString(12) + "', '" + rset.getString(13) + "')");
+                }
+            } catch (Exception e) {
+            }
+            con.cierraConexion();
+            consql.cierraConexion();
+        } catch (Exception e) {
+        }
+    }
 }// end of the Class
