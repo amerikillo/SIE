@@ -148,6 +148,16 @@ public class Proveedores extends HttpServlet {
                 }
 
             }
+
+            if (request.getParameter("accion").equals("obtieneProvee")) {
+                try {
+                    proveedores();
+                    out.println("<script>alert('Se obtuvieron los Proveedores Correctamente')</script>");
+                } catch (Exception e) {
+                    out.println("<script>alert('Error al obtener proveedores')</script>");
+                }
+                 out.println("<script>window.location='catalogo.jsp'</script>");
+            }
         } catch (SQLException e) {
 
         }
@@ -191,5 +201,23 @@ public class Proveedores extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void proveedores() {
+        try {
+            consql.conectar();
+            con.conectar();
+            try {
+                con.insertar("truncate table provee_all");
+                ResultSet rset = consql.consulta("select * from TB_Provee;");
+                while (rset.next()) {
+                    con.insertar("insert into provee_all values ('" + rset.getString(1) + "', '" + rset.getString(2) + "', '" + rset.getString(3) + "', '" + rset.getString(4) + "', '" + rset.getString(5) + "', '" + rset.getString(6) + "', '" + rset.getString(7) + "', '" + rset.getString(8) + "' ,'" + rset.getString(9) + "', '" + rset.getString(10) + "', '" + rset.getString(11) + "', '" + rset.getString(12) + "', '" + rset.getString(13) + "')");
+                }
+            } catch (Exception e) {
+            }
+            con.cierraConexion();
+            consql.cierraConexion();
+        } catch (Exception e) {
+        }
+    }
 
 }

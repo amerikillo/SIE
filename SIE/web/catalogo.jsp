@@ -180,6 +180,9 @@
                                 <div class="col-xs-1">
                                     <button class="btn btn-block btn-primary" type="submit" name="accion" value="guardar" onclick="return valida_alta();"> Guardar</button> 
                                 </div>
+                                <div class="col-xs-3">
+                                    <a class="btn btn-block btn-success" name="accion" value="obtieneProvee" href="Proveedores?accion=obtieneProvee" onclick="return confirm('Desea Obtener los proveedores de SGW?');">Cargar Proveedores de SGW</a> 
+                                </div>
                             </div>
                         </div>
                     </form>
